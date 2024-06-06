@@ -72,15 +72,15 @@
                     <label for="townPopulation" class="form-label">Population :</label>
                     <select name="townPopulation" id="townPopulation" class="form-select">
                         <option value="">---Select Population---</option>
-                        <option value="1 lac to 5 lac">1 lac to 5 lac</option>
-                        <option value="5 lac to 10 lac">5 lac to 10 lac</option>
-                        <option value="Above 10 lac">Above 10 lac</option>
+                        <option value="100000">1 lac to 5 lac</option>
+                        <option value="500000">5 lac to 10 lac</option>
+                        <option value="1000000">Above 10 lac</option>
                     </select>
                 </div>
                 <div class="form-group mb-3">
                     <label for="townState" class="form-label">State :</label>
                     {{!-- <input type="text" id="townState" name="townState" class="form-control"> --}}
-                    <select class="form-control" id="townState">
+                    <select class="form-control" id="townState" name="townState">
                         <option value="SelectState">---Select State---</option>
                         <option value="Andra Pradesh">Andra Pradesh</option>
                         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -390,8 +390,8 @@
                     <label for="companyName1" class="form-label">Company Name 1 :</label>
                     <input type="text" class="form-control" id="companyName1" name="companyName1">
 
-                    <label for="companyCategory" class="form-label">Company Category :</label>
-                    <select name="companyCategory" id="companyCategory" class="form-select">
+                    <label for="companyCategory1" class="form-label">Company Category :</label>
+                    <select name="companyCategory1" id="companyCategory1" class="form-select">
                         <option value="">---Select Category---</option>
                         <option value="1">Personal Care</option>
                         <option value="2">Foods</option>
@@ -426,8 +426,8 @@
                     <label for="companyName2" class="form-label">Company Name 2 :</label>
                     <input type="text" class="form-control" id="companyName2" name="companyName2">
 
-                    <label for="companyCategory" class="form-label">Company Category :</label>
-                    <select name="companyCategory" id="companyCategory" class="form-select">
+                    <label for="companyCategory2" class="form-label">Company Category :</label>
+                    <select name="companyCategor2" id="companyCategory2" class="form-select">
                         <option value="">---Select Category---</option>
                         <option value="1">Personal Care</option>
                         <option value="2">Foods</option>
@@ -476,7 +476,7 @@
                     <label for="proposedSalesmanCount" class="form-label">No. of Salesman :</label>
                     <input type="number" class="form-control" id="proposedSalesmanCount" name="proposedSalesmanCount">
                 </div>
-                <div class="form-group mb-3">
+                {{!-- <div class="form-group mb-3">
                     <label for="proposedTwoWheelerCount" class="form-label">No. of 2 Wheelers :</label>
                     <input type="number" class="form-control" id="proposedTwoWheelerCount"
                         name="proposedTwoWheelerCount">
@@ -485,6 +485,11 @@
                     <label for="proposedFourWheelerCount" class="form-label">No. of 4 Wheelers :</label>
                     <input type="number" class="form-control" id="proposedFourWheelerCount"
                         name="proposedFourWheelerCount">
+                </div> --}}
+                <div class="form-group mb-3">
+                    <label for="proposedVehicleCount" class="form-label">No. of Wheelers :</label>
+                    <input type="number" class="form-control" id="proposedVehicleCount"
+                        name="proposedVehicleCount">
                 </div>
                 <div class="form-group mb-3">
                     <label for="expectedTurnover" class="form-label">Expected Turnover :</label>
@@ -594,9 +599,7 @@
 
 </body>
 
-<!-- partial -->
-<script src='https://code.jquery.com/jquery-3.6.4.slim.min.js'></script>
-<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+{{> scripts}}
 
 <script>
     var currentStep = 1;

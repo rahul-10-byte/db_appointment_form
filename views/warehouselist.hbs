@@ -1,0 +1,47 @@
+<html>
+    {{>head}}
+
+    <body>
+        {{>navbar}}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Warehouse List</h1>
+                    <table class="table table-striped" id="warehouselist" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Warehouse SAP ID</th>
+                                <th>Status</th>
+                                <th>Warehouse Name</th>
+                                <th>Warehouse City</th>
+                                <th>Warehouse District</th>
+                                <th>Warehouse State</th>
+                                <th>Warehouse Pincode</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each warehouses}}
+                            <tr>
+                                <td>{{sap_code}}</td>
+                                <td>{{status}}</td>
+                                <td>{{firm_name}}</td>
+                                <td>{{city}}</td>
+                                <td>{{district}}</td>
+                                <td>{{state}}</td>
+                                <td>{{pincode}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    {{> scripts}}
+    <script>
+        $('#warehouselist').DataTable({
+            scrollX: true,
+        });
+    </script>
+</html>
