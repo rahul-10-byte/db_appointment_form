@@ -417,10 +417,51 @@ const dbAppointmentController = {
                                                                     results.insertId
                                                                 );
 
-                                                                res.status(
-                                                                    200
-                                                                ).json(
-                                                                    "Form submitted successfully!"
+                                                                // Inserting approval data
+                                                                const approvalData =
+                                                                    {
+                                                                        appointment_id:
+                                                                            appointmentId,
+                                                                        approver_id:
+                                                                            firstApprover,
+                                                                        approval_status:
+                                                                            "Pending",
+                                                                        approval_level: 1,
+                                                                    };
+
+                                                                db.query(
+                                                                    "INSERT INTO appointment_approvals SET ?",
+                                                                    approvalData,
+                                                                    (
+                                                                        error,
+                                                                        results
+                                                                    ) => {
+                                                                        if (
+                                                                            error
+                                                                        ) {
+                                                                            console.error(
+                                                                                "Error inserting approval data:",
+                                                                                error
+                                                                            );
+                                                                            return res
+                                                                                .status(
+                                                                                    500
+                                                                                )
+                                                                                .send(
+                                                                                    "Error submitting form"
+                                                                                );
+                                                                        }
+                                                                        console.log(
+                                                                            "Inserted approval data with ID:",
+                                                                            results.insertId
+                                                                        );
+
+                                                                        res.status(
+                                                                            200
+                                                                        ).json(
+                                                                            "Form submitted successfully!"
+                                                                        );
+                                                                    }
                                                                 );
                                                             }
                                                         );
@@ -440,7 +481,7 @@ const dbAppointmentController = {
 
     getApprovalList: async (req, res) => {
         db.query(
-            "SELECT * FROM db_appointment_master",
+            `SELECT * FROM db_appointment_master where status = "pending"`,
             (err, appointmentDetails) => {
                 if (err) throw err;
                 res.render("approval_list", {

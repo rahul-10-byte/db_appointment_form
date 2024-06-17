@@ -3,32 +3,6 @@
 
 {{> head}}
 
-<style>
-    #otherText {
-        display: none;
-    }
-
-    .step.active {
-        display: block;
-    }
-
-    .step-circle {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: #007bff;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    .step-circle.active {
-        background-color: #0056b3;
-    }
-</style>
-
 <body>
 
     <div class="d-flex" id="wrapper">
@@ -58,11 +32,21 @@
                         <div class="step-circle" onclick="displayStep(9)">9</div>
                     </div>
                 </div>
-                <div id="container" class="container mt-5">
+                <div id="container" class="container mt-5 form-container">
 
-                    <form id="multi-step-form">
+                    <form id="multi-step-form" class="mb-5" style="">
                         <div class="step step-1" id="step1">
                             <h3>NEW APPOINTMENT</h3>
+                            <br>
+                            <div class="form-group mb-3">
+                                <label for="appointmentType" class="form-label">Appointment Type :</label>
+                                <select name="appointmentType" id="appointmentType" class="form-select">
+                                    <option value="">---Select Type---</option>
+                                    <option value="SS">Super Stockist</option>
+                                    <option value="DB">Distributor</option>
+                                </select>
+                            </div>
+
                             <div class="form-group mb-3">
                                 <label for="appointmentReason" class="form-label">Reason :</label>
                                 <select name="appointmentReason" id="appointmentReason" class="form-select">
@@ -73,22 +57,17 @@
                                 </select>
                             </div>
                             <div class="form-group mb-3">
+                                <label for="townPincode" class="form-label">Pincode :</label>
+                                <input type="text" name="townPincode" id="townPincode" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
                                 <label for="baseTown" class="form-label">Base Town :</label>
                                 <input type="text" id="baseTown" name="baseTown" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="townPopulation" class="form-label">Population :</label>
-                                <select name="townPopulation" id="townPopulation" class="form-select">
-                                    <option value="">---Select Population---</option>
-                                    <option value="100000">1 lac to 5 lac</option>
-                                    <option value="500000">5 lac to 10 lac</option>
-                                    <option value="1000000">Above 10 lac</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
                                 <label for="townState" class="form-label">State :</label>
-                                {{!-- <input type="text" id="townState" name="townState" class="form-control"> --}}
-                                <select class="form-control" id="townState" name="townState">
+                                <input type="text" id="townState" name="townState" class="form-control">
+                                {{!-- <select class="form-control" id="townState">
                                     <option value="SelectState">---Select State---</option>
                                     <option value="Andra Pradesh">Andra Pradesh</option>
                                     <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -128,6 +107,15 @@
                                     <option value="Delhi">Delhi</option>
                                     <option value="Lakshadeep">Lakshadeep</option>
                                     <option value="Pondicherry">Pondicherry</option>
+                                </select> --}}
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="townPopulation" class="form-label">Population :</label>
+                                <select name="townPopulation" id="townPopulation" class="form-select">
+                                    <option value="">---Select Population---</option>
+                                    <option value="100000">1 lac to 5 lac</option>
+                                    <option value="500000">5 lac to 10 lac</option>
+                                    <option value="1000000">Above 10 lac</option>
                                 </select>
                             </div>
                             <div class="form-label mb-3">
@@ -140,9 +128,10 @@
                                     <option value="South">South</option>
                                 </select>
                             </div>
-
-                            <br>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+                                <br>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-2" id="step2">
@@ -170,7 +159,7 @@
                                     name="existingPartyContact">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="existingPartyTurnover" class="form-label">Turnover :</label>
+                                <label for="existingPartyTurnover" class="form-label">Turnover (in lakhs) :</label>
                                 <input type="number" class="form-control" id="existingPartyTurnover"
                                     name="existingPartyTurnover">
                             </div>
@@ -207,7 +196,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="claimAmount" class="form-label">Claim Amount :</label>
+                                <label for="claimAmount" class="form-label">Claim Amount (in Lakhs) :</label>
                                 <input type="number" class="form-control" id="claimAmount" name="claimAmount">
                             </div>
                             <div class="form-group mb-3">
@@ -227,10 +216,11 @@
                                     name="distributionDuration">
                             </div>
 
-                            <br>
+                            <div class="sticky-bottom sticky-buttons">
 
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-3" id="step3">
@@ -299,13 +289,15 @@
                                 <input type="file" class="form-control" id="firmCertificate" name="firmCertificate">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="partyTurnover" class="form-label">Current Turnover :</label>
+                                <label for="partyTurnover" class="form-label">Current Turnover (in Lakhs) :</label>
                                 <input type="number" class="form-control" id="partyTurnover" name="partyTurnover">
                             </div>
 
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-4">
@@ -315,14 +307,18 @@
                                 <input type="text" class="form-control" id="accountHolderName" name="accountHolderName">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="bankName" class="form-label">Bank Name :</label>
-                                <input type="text" class="form-control" id="bankName" name="bankName">
+                                <label for="accountNo" class="form-label">Account Number :</label>
+                                <input type="text" class="form-control" id="accountNo" name="accountNo">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="branchName" class="form-label">Branch Name :</label>
-                                {{!-- <input type="text" class="form-control" id="branchName" name="branchName"> --}}
-                                <select name="branchName" id="branchName" class="form-select">
-                                    <option value="">---Select Branch---</option>
+                                <label for="IFSCCode" class="form-label">IFSC Code :</label>
+                                <input type="text" class="form-control" id="IFSCCode" name="IFSCCode">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="bankName" class="form-label">Bank Name :</label>
+                                <input type="text" class="form-control" id="bankName" name="bankName">
+                                {{!-- <select name="bankName" id="bankName" class="form-select">
+                                    <option value="">---Select Bank---</option>
                                     <option value="Allahabad Bank">Allahabad Bank</option>
                                     <option value="Andhra Bank">Andhra Bank</option>
                                     <option value="Axis Bank">Axis Bank</option>
@@ -374,15 +370,11 @@
                                     <option value="United Bank of India">United Bank of India</option>
                                     <option value="Vijaya Bank">Vijaya Bank</option>
                                     <option value="Yes Bank Ltd">Yes Bank Ltd</option>
-                                </select>
+                                </select> --}}
                             </div>
                             <div class="form-group mb-3">
-                                <label for="accountNo" class="form-label">Account Number :</label>
-                                <input type="text" class="form-control" id="accountNo" name="accountNo">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="IFSCCode" class="form-label">IFSC Code :</label>
-                                <input type="text" class="form-control" id="IFSCCode" name="IFSCCode">
+                                <label for="branchName" class="form-label">Branch Name :</label>
+                                <input type="text" class="form-control" id="branchName" name="branchName">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="partyAadhaarCardFront" class="form-label">Aadhaar Card (Front) :</label>
@@ -403,10 +395,12 @@
                                 <input type="file" class="form-control" id="partyCancelledCheque"
                                     name="partyCancelledCheque">
                             </div>
-                            <br>
 
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-5">
@@ -419,15 +413,14 @@
                                 <label for="companyCategory1" class="form-label">Company Category :</label>
                                 <select name="companyCategory1" id="companyCategory1" class="form-select">
                                     <option value="">---Select Category---</option>
-                                    <option value="1">Personal Care</option>
-                                    <option value="2">Foods</option>
-                                    <option value="3">Beverages</option>
-                                    <option value="4">Food and Beverages</option>
-                                    <option value="">Ice-creams</option>
-                                    <option value="">Deo</option>
-                                    <option value="">FMCG</option>
-                                    <option value="">Others</option>
+                                    <option value="Personal Care & Grooming">Personal Care & Grooming</option>
+                                    <option value="Beauty & Cosmetics">Beauty & Cosmetics</option>
+                                    <option value="Food and Beverages">Food and Beverages</option>
+                                    <option value="Health Care">Health Care</option>
+                                    <option value="FMCG">FMCG</option>
+                                    <option value="Others">Others</option>
                                 </select>
+
 
                                 <label for="outletCovered1" class="form-label">Outlets Covered :</label>
                                 <input type="number" class="form-control" id="outletCovered1" name="outletCovered1">
@@ -438,10 +431,11 @@
                                 <label for="vehicleCount1" class="form-label">No. of Units (Vehicles) :</label>
                                 <input type="number" class="form-control" id="vehicleCount1" name="vehicleCount1">
 
-                                <label for="approxTurnover1" class="form-label">Approx. Turnover :</label>
+                                <label for="approxTurnover1" class="form-label">Approx. Turnover (in Lakhs) :</label>
                                 <input type="number" class="form-control" id="approxTurnover1" name="approxTurnover1">
 
-                                <label for="approxInvestment1" class="form-label">Approx. Investment :</label>
+                                <label for="approxInvestment1" class="form-label">Approx. Investment (in Lakhs)
+                                    :</label>
                                 <input type="number" class="form-control" id="approxInvestment1"
                                     name="approxInvestment1">
 
@@ -456,14 +450,12 @@
                                 <label for="companyCategory2" class="form-label">Company Category :</label>
                                 <select name="companyCategory2" id="companyCategory2" class="form-select">
                                     <option value="">---Select Category---</option>
-                                    <option value="1">Personal Care</option>
-                                    <option value="2">Foods</option>
-                                    <option value="3">Beverages</option>
-                                    <option value="4">Food and Beverages</option>
-                                    <option value="">Ice-creams</option>
-                                    <option value="">Deo</option>
-                                    <option value="">FMCG</option>
-                                    <option value="">Others</option>
+                                    <option value="Personal Care & Grooming">Personal Care & Grooming</option>
+                                    <option value="Beauty & Cosmetics">Beauty & Cosmetics</option>
+                                    <option value="Food and Beverages">Food and Beverages</option>
+                                    <option value="Health Care">Health Care</option>
+                                    <option value="FMCG">FMCG</option>
+                                    <option value="Others">Others</option>
                                 </select>
 
                                 <label for="outletCovered2" class="form-label">Outlets Covered :</label>
@@ -475,19 +467,22 @@
                                 <label for="vehicleCount2" class="form-label">No. of Units (Vehicles) :</label>
                                 <input type="number" class="form-control" id="vehicleCount2" name="vehicleCount2">
 
-                                <label for="approxTurnover2" class="form-label">Approx. Turnover :</label>
+                                <label for="approxTurnover2" class="form-label">Approx. Turnover (in Lakhs) :</label>
                                 <input type="number" class="form-control" id="approxTurnover2" name="approxTurnover2">
 
-                                <label for="approxInvestment2" class="form-label">Approx. Investment :</label>
+                                <label for="approxInvestment2" class="form-label">Approx. Investment (in Lakhs)
+                                    :</label>
                                 <input type="number" class="form-control" id="approxInvestment2"
                                     name="approxInvestment2">
 
                                 <label for="investmentProof2" class="form-label">proof of company invoice :</label>
                                 <input type="file" class="form-control" id="investmentProof2" name="investmentProof2">
                             </div>
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-6">
@@ -499,7 +494,7 @@
                                     name="proposedOutletCovered">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="routesCount" class="form-label">No. of Routes :</label>
+                                <label for="routesCount" class="form-label">No. of beats :</label>
                                 <input type="number" class="form-control" id="routesCount" name="routesCount">
                             </div>
                             <div class="form-group mb-3">
@@ -507,7 +502,7 @@
                                 <input type="number" class="form-control" id="proposedSalesmanCount"
                                     name="proposedSalesmanCount">
                             </div>
-                            {{!-- <div class="form-group mb-3">
+                            <div class="form-group mb-3">
                                 <label for="proposedTwoWheelerCount" class="form-label">No. of 2 Wheelers :</label>
                                 <input type="number" class="form-control" id="proposedTwoWheelerCount"
                                     name="proposedTwoWheelerCount">
@@ -516,11 +511,6 @@
                                 <label for="proposedFourWheelerCount" class="form-label">No. of 4 Wheelers :</label>
                                 <input type="number" class="form-control" id="proposedFourWheelerCount"
                                     name="proposedFourWheelerCount">
-                            </div> --}}
-                            <div class="form-group mb-3">
-                                <label for="proposedVehicleCount" class="form-label">No. of Wheelers :</label>
-                                <input type="number" class="form-control" id="proposedVehicleCount"
-                                    name="proposedVehicleCount">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="expectedTurnover" class="form-label">Expected Turnover :</label>
@@ -540,9 +530,11 @@
                                     <option value="3">Fortnightly</option>
                                 </select>
                             </div>
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-7">
@@ -572,9 +564,10 @@
                                 <input type="radio" id="RSConnectCompatibleNo" name="RSConnectCompatible" value="no">
                                 <label for="RSConnectCompatibleNo">No</label>
                             </div>
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
+                            <div class="sticky-bottom sticky-buttons">
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
+                            </div>
                         </div>
 
                         <div class="step step-8">
@@ -599,13 +592,14 @@
                                 <label for="deliveryVehPic" class="form-label">Delivery Vehicle Pic :</label>
                                 <input type="file" class="form-control" id="deliveryVehPic" name="deliveryVehPic">
                             </div>
-                            <div class="form-group mb-3">
+                            {{!-- <div class="form-group mb-3">
                                 <label for="deliveryVehRC" class="form-label">Delivery Vehicle RC :</label>
                                 <input type="file" class="form-control" id="deliveryVehRC" name="deliveryVehRC">
+                            </div> --}}
+                            <div class="sticky-bottom sticky-buttons">
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="button" class="btn btn-primary next-step">Next</button>
                             </div>
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="button" class="btn btn-primary next-step">Next</button>
                         </div>
                         <div class="step step-9">
                             <h3>APPROVERS</h3>
@@ -621,9 +615,10 @@
                                 <label for="thirdApprover" class="form-label">Third Level Approver :</label>
                                 <input type="text" id="thirdApprover" name="thirdApprover" class="form-control">
                             </div>
-                            <br>
-                            <button type="button" class="btn btn-primary prev-step">Previous</button>
-                            <button type="submit" class="btn btn-success" onclick="submitForm()">Submit</button>
+                            <div class="sticky-bottom sticky-buttons">
+                                <button type="button" class="btn btn-primary prev-step">Previous</button>
+                                <button type="submit" class="btn btn-success" onclick="submitForm()">Submit</button>
+                            </div>
                         </div>
 
                     </form>
@@ -689,7 +684,9 @@
                     const reason = $('#appointmentReason').val();
                     if (reason === 'Expansion') {
                         $('#step2').hide();
-                        //disable step 2
+
+                        // disable step 2
+
                         currentStep -= 2;  // Skip Step 2 if reason is Expansion
                     } else {
                         currentStep--;
@@ -732,6 +729,62 @@
         var othersOption = selectBox.querySelector("option[value='Others']");
         othersOption.value = otherText.value;
         othersOption.textContent = otherText.value;
+    });
+
+    document.getElementById('townPincode').addEventListener('input', function () {
+        var baseTown = document.getElementById('townPincode').value;
+        if (baseTown.length === 6) {
+            $.ajax({
+                url: 'https://api.postalpincode.in/pincode/' + baseTown,
+                type: 'GET',
+                success: function (response) {
+                    console.log('Town details:', response[0].Status);
+                    if (response[0].Status === 'Error') {
+                        console.error('Error fetching town details:', response[0].Message);
+
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Check the Pincode. Error fetching town details: ' + response[0].Message,
+                            confirmButtonText: 'OK'
+                        });
+
+                    } else if (response[0].Status === 'Success') {
+                        document.getElementById('baseTown').value = response[0].PostOffice[0].District;
+                        document.getElementById('baseTown').disabled = true;
+                        document.getElementById('townState').value = response[0].PostOffice[0].State;
+                        document.getElementById('townState').disabled = true;
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    console.error('Check the Pincode. Error fetching town details:', error[0].Message);
+
+                }
+            });
+        }
+    });
+
+    // Fetch bank details when IFSC code is entered
+    document.getElementById('IFSCCode').addEventListener('input', function () {
+        console.log('IFSC code changed');
+        var IFSCcode = document.getElementById('IFSCCode').value;
+        if (IFSCcode.length === 11) {
+            $.ajax({
+                url: 'https://ifsc.razorpay.com/' + IFSCcode,
+                type: 'GET',
+                success: function (response) {
+                    console.log('Bank details:', response);
+                    document.getElementById('bankName').value = response.BANK;
+                    document.getElementById('bankName').disabled = true;
+                    document.getElementById('branchName').value = response.BRANCH;
+                    document.getElementById('branchName').disabled = true;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching bank details:', error);
+                }
+            });
+        }
     });
 
     function submitForm() {

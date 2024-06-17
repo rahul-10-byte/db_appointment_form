@@ -156,7 +156,7 @@ router.get("/api/warehouse/:party_id", (req, res) => {
 });
 
 // route to get approval details
-router.get("/approvallist", dbAppointmentController.getApprovalList);
+router.post("/getApprovalList", dbAppointmentController.getApprovalList);
 
 // Route to handle form submission
 router.post(

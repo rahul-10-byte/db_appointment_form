@@ -7,45 +7,6 @@ html {
     height: 100%;
 }
 
-#container {
-    max-width: 600px;
-}
-
-.step-container {
-    position: relative;
-    text-align: center;
-    transform: translateY(-43%);
-}
-
-.step-circle {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 2px solid #007bff;
-    line-height: 30px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    cursor: pointer; /* Added cursor pointer */
-}
-
-.step-line {
-    position: absolute;
-    top: 16px;
-    left: 50px;
-    width: calc(100% - 100px);
-    height: 2px;
-    background-color: #007bff;
-    z-index: -1;
-}
-
-#multi-step-form {
-    overflow-x: hidden;
-}
-
 /*Background color*/
 #grad1 {
     /* background-color: : #9C27B0; */
@@ -291,4 +252,81 @@ select.list-dt:focus {
 .fit-image {
     width: 100%;
     object-fit: cover;
+}
+
+body {
+    background-color: currentColor;
+}
+
+#multi-step-form {
+    background-color: rgb(255, 177, 2);
+    /* background-color: #9dcafe; */
+    padding: 20px;
+    border-radius: 15px;
+}
+
+#container {
+    max-width: 600px;
+}
+
+.step-container {
+    position: relative;
+    text-align: center;
+    transform: translateY(-43%);
+}
+
+.step-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    border: 2px solid #007bff;
+    line-height: 30px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer; /* Added cursor pointer */
+}
+
+.step-line {
+    position: absolute;
+    top: 16px;
+    left: 50px;
+    width: calc(100% - 100px);
+    height: 2px;
+    background-color: #007bff;
+    z-index: -1;
+}
+
+#multi-step-form {
+    overflow-x: hidden;
+}
+
+.step.active {
+    display: block;
+}
+
+.step-circle:active {
+    background-color: #373738;
+}
+
+#otherText {
+    display: none;
+}
+
+.sticky-buttons {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /*background-color: rgb(193, 193, 193);*/
+    background-color: currentColor;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
 }
