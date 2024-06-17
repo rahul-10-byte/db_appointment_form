@@ -1,5 +1,22 @@
-<!-- partial -->
 <script src='https://code.jquery.com/jquery-3.6.4.slim.min.js'></script>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', event => {
+
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
+
+    });
+
+</script>

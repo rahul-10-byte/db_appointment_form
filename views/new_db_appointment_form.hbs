@@ -31,571 +31,608 @@
 
 <body>
 
-    {{> navbar}}
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar-->
+        {{>sidebar}}
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+            <!-- Top navigation-->
+            {{>navbar}}
+            <!-- Page content-->
+            <div class="container-fluid">
 
-    <div class="container mt-5">
-        <div class="progress px-1" style="height: 3px;">
-            <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-                aria-valuemax="100"></div>
-        </div>
-        <div class="step-container d-flex justify-content-between">
-            <div class="step-circle" onclick="displayStep(1)">1</div>
-            <div class="step-circle" onclick="displayStep(2)">2</div>
-            <div class="step-circle" onclick="displayStep(3)">3</div>
-            <div class="step-circle" onclick="displayStep(4)">4</div>
-            <div class="step-circle" onclick="displayStep(5)">5</div>
-            <div class="step-circle" onclick="displayStep(6)">6</div>
-            <div class="step-circle" onclick="displayStep(7)">7</div>
-            <div class="step-circle" onclick="displayStep(8)">8</div>
-            <div class="step-circle" onclick="displayStep(9)">9</div>
+                <div class="container mt-5">
+                    <div class="progress px-1" style="height: 3px;">
+                        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="step-container d-flex justify-content-between">
+                        <div class="step-circle" onclick="displayStep(1)">1</div>
+                        <div class="step-circle" onclick="displayStep(2)">2</div>
+                        <div class="step-circle" onclick="displayStep(3)">3</div>
+                        <div class="step-circle" onclick="displayStep(4)">4</div>
+                        <div class="step-circle" onclick="displayStep(5)">5</div>
+                        <div class="step-circle" onclick="displayStep(6)">6</div>
+                        <div class="step-circle" onclick="displayStep(7)">7</div>
+                        <div class="step-circle" onclick="displayStep(8)">8</div>
+                        <div class="step-circle" onclick="displayStep(9)">9</div>
+                    </div>
+                </div>
+                <div id="container" class="container mt-5">
+
+                    <form id="multi-step-form">
+                        <div class="step step-1" id="step1">
+                            <h3>NEW APPOINTMENT</h3>
+                            <div class="form-group mb-3">
+                                <label for="appointmentReason" class="form-label">Reason :</label>
+                                <select name="appointmentReason" id="appointmentReason" class="form-select">
+                                    <option value="">---Select Reason---</option>
+                                    <option value="Replacement">Replacement</option>
+                                    <option value="Birfurcation">Birfurcation</option>
+                                    <option value="Expansion">Expansion</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="baseTown" class="form-label">Base Town :</label>
+                                <input type="text" id="baseTown" name="baseTown" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="townPopulation" class="form-label">Population :</label>
+                                <select name="townPopulation" id="townPopulation" class="form-select">
+                                    <option value="">---Select Population---</option>
+                                    <option value="100000">1 lac to 5 lac</option>
+                                    <option value="500000">5 lac to 10 lac</option>
+                                    <option value="1000000">Above 10 lac</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="townState" class="form-label">State :</label>
+                                {{!-- <input type="text" id="townState" name="townState" class="form-control"> --}}
+                                <select class="form-control" id="townState" name="townState">
+                                    <option value="SelectState">---Select State---</option>
+                                    <option value="Andra Pradesh">Andra Pradesh</option>
+                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                    <option value="Assam">Assam</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Chhattisgarh">Chhattisgarh</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madya Pradesh">Madya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Manipur">Manipur</option>
+                                    <option value="Meghalaya">Meghalaya</option>
+                                    <option value="Mizoram">Mizoram</option>
+                                    <option value="Nagaland">Nagaland</option>
+                                    <option value="Orissa">Orissa</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Sikkim">Sikkim</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Telangana">Telangana</option>
+                                    <option value="Tripura">Tripura</option>
+                                    <option value="Uttaranchal">Uttaranchal</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                    <option disabled style="background-color:#aaa; color:#fff">UNION Territories
+                                    </option>
+                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                    <option value="Chandigarh">Chandigarh</option>
+                                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
+                                    <option value="Daman and Diu">Daman and Diu</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Lakshadeep">Lakshadeep</option>
+                                    <option value="Pondicherry">Pondicherry</option>
+                                </select>
+                            </div>
+                            <div class="form-label mb-3">
+                                <label for="townRegion" class="form-label">Region :</label>
+                                <select name="townRegion" id="townRegion" class="form-select">
+                                    <option value="">---Select Region---</option>
+                                    <option value="North">North</option>
+                                    <option value="East">East</option>
+                                    <option value="West">West</option>
+                                    <option value="South">South</option>
+                                </select>
+                            </div>
+
+                            <br>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-2" id="step2">
+                            <h3>EXIT FORM FOR OLD PARTY</h3>
+                            <div class="form-group mb-3">
+                                <label for="sapSSCode" class="form-label">Existing Party's SAP SS Code :</label>
+                                <input type="text" class="form-control" id="sapSSCode" name="sapSSCode">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="existingPartyName" class="form-label">Exisitng Party's Name in SAP :</label>
+                                <select name="existingPartyName" id="existingPartyName" class="form-select">
+                                    <option value="">---Select Party---</option>
+                                    {{#each partyDetails}}
+                                    <option value="{{party_id}}">{{firm_name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="existingPartyTown" class="form-label">Existing Party's Town :</label>
+                                <input type="text" class="form-control" id="existingPartyTown" name="existingPartyTown">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="existingPartyContact" class="form-label">Exisitng Party's Contact :</label>
+                                <input type="tel" class="form-control" id="existingPartyContact"
+                                    name="existingPartyContact">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="existingPartyTurnover" class="form-label">Turnover :</label>
+                                <input type="number" class="form-control" id="existingPartyTurnover"
+                                    name="existingPartyTurnover">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="exitReason" class="form-label">Reason for Replacement / Birfurcation
+                                    :</label>
+                                <select name="exitReason" id="exitReason" class="form-select"
+                                    onchange="showTextField()">
+                                    <option value="">---Select Reason---</option>
+                                    <option value="Not Interested">Not Interested</option>
+                                    <option value="Check Bounce">Check Bounce</option>
+                                    <option value="Poor Distribution">Poor Distribution</option>
+                                    <option value="Financially Weak">Financially Weak</option>
+                                    <option value="Coverage Increase">Coverage Increase</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                                <input type="text" class="form-control" id="otherText" placeholder="Please specify"
+                                    oninput="updateOthersOption()" />
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="claimSettlementStatus" class="form-label">Status of Claim Settlement
+                                    :</label>
+                                <input type="radio" id="claimSettlementYes" name="claimSettlementStatus" value="yes">
+                                <label for="claimSettlementYes">Yes</label>
+                                <input type="radio" id="claimSettlementNo" name="claimSettlementStatus" value="no">
+                                <label for="claimSettlementNo">No</label>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="claimRegarding" class="form-label">Claims Regarding :</label>
+                                <select name="claimRegarding" class="form-select" id="claimRegarding">
+                                    <option value="">---Select Reason---</option>
+                                    <option value="Damage Claim">Damage Claim</option>
+                                    <option value="Secondary Claim">Secondary Claim</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="claimAmount" class="form-label">Claim Amount :</label>
+                                <input type="number" class="form-control" id="claimAmount" name="claimAmount">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="settlementTimeline" class="form-label">Timeline for Settlement :</label>
+                                <input type="date" class="form-control" id="settlementTimeline"
+                                    name="settlementTimeline">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="uploadNOC" class="form-label">Upload Resignation / NOC :</label>
+                                <input type="file" class="form-control" id="uploadNOC" name="uploadNOC">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="distributionDuration" class="form-label">Duration of distribution with UG
+                                    (in Years)
+                                    :</label>
+                                <input type="number" class="form-control" id="distributionDuration"
+                                    name="distributionDuration">
+                            </div>
+
+                            <br>
+
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-3" id="step3">
+                            <h3>DETAILS OF NEW PARTY</h3>
+                            <div class="form-group mb-3">
+                                <label for="firmName" class="form-label">Title of Firm (as per GST/TIN) :</label>
+                                <input type="text" class="form-control" id="firmName" name="firmName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="GSTNo" class="form-label">GST No. :</label>
+                                <input type="text" class="form-control" id="GSTNo" name="GSTNo">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="GSTCertficate" class="form-label">Upload GST Certificate :</label>
+                                <input type="file" class="form-control" id="GSTCertficate" name="GSTCertficate">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="firmAddress" class="form-label">Address :</label>
+                                <textarea class="form-control" id="firmAddress" name="firmAddress"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="cityName" class="form-label">City/Town :</label>
+                                <input type="text" class="form-control" id="cityName" name="cityName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="stateName" class="form-label">State :</label>
+                                <input type="text" class="form-control" id="stateName" name="stateName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pinCode" class="form-label">Pin Code :</label>
+                                <input type="number" class="form-control" id="pinCode" name="pinCode">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="warehouseSize" class="form-label">Warehouse Size (carpet area in Sq. Ft.)
+                                    :</label>
+                                <input type="number" class="form-control" id="warehouseSize" name="warehouseSize">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="contactPersonName" class="form-label">Name of Contact Person :</label>
+                                <input type="text" class="form-control" id="contactPersonName" name="contactPersonName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="mobileNo" class="form-label">Mobile Number</label>
+                                <input type="tel" class="form-control" id="mobileNo" name="mobileNo">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="emailId" class="form-label">Email ID :</label>
+                                <input type="email" class="form-control" id="emailId" name="emailId">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="areaCovered" class="form-label">Areas to be Covered by the New Party
+                                    :</label>
+                                <input type="text" class="form-control" id="areaCovered" name="areaCovered">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyType" class="form-label">Type of Firm :</label>
+                                <select name="partyType" id="partyType" class="form-select">
+                                    <option value="">---Select Type---</option>
+                                    <option value="1">Sole Proprietor</option>
+                                    <option value="2">Partnership</option>
+                                    <option value="3">Pvt. Ltd. Company</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="firmCertificate" class="form-label">Upload Firm Certificate :</label>
+                                <input type="file" class="form-control" id="firmCertificate" name="firmCertificate">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyTurnover" class="form-label">Current Turnover :</label>
+                                <input type="number" class="form-control" id="partyTurnover" name="partyTurnover">
+                            </div>
+
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-4">
+                            <h3>BANK DETAILS OF NEW PARTY</h3>
+                            <div class="form-group mb-3">
+                                <label for="accountHolderName" class="form-label">Account Holder Name :</label>
+                                <input type="text" class="form-control" id="accountHolderName" name="accountHolderName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="bankName" class="form-label">Bank Name :</label>
+                                <input type="text" class="form-control" id="bankName" name="bankName">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="branchName" class="form-label">Branch Name :</label>
+                                {{!-- <input type="text" class="form-control" id="branchName" name="branchName"> --}}
+                                <select name="branchName" id="branchName" class="form-select">
+                                    <option value="">---Select Branch---</option>
+                                    <option value="Allahabad Bank">Allahabad Bank</option>
+                                    <option value="Andhra Bank">Andhra Bank</option>
+                                    <option value="Axis Bank">Axis Bank</option>
+                                    <option value="Bank of Bahrain and Kuwait">Bank of Bahrain and Kuwait</option>
+                                    <option value="Bank of Baroda">Bank of Baroda</option>
+                                    <option value="Bank of India">Bank of India</option>
+                                    <option value="Bank of Maharashtra">Bank of Maharashtra</option>
+                                    <option value="Canara Bank">Canara Bank</option>
+                                    <option value="Central Bank of India">Central Bank of India</option>
+                                    <option value="City Union Bank">City Union Bank</option>
+                                    <option value="Corporation Bank">Corporation Bank</option>
+                                    <option value="Deutsche Bank">Deutsche Bank</option>
+                                    <option value="Development Credit Bank">Development Credit Bank</option>
+                                    <option value="Dhanlaxmi Bank">Dhanlaxmi Bank</option>
+                                    <option value="Federal Bank">Federal Bank</option>
+                                    <option value="ICICI Bank">ICICI Bank</option>
+                                    <option value="IDBI Bank">IDBI Bank</option>
+                                    <option value="Indian Bank">Indian Bank</option>
+                                    <option value="Indian Overseas Bank">Indian Overseas Bank</option>
+                                    <option value="IndusInd Bank">IndusInd Bank</option>
+                                    <option value="ING Vysya Bank">ING Vysya Bank</option>
+                                    <option value="Jammu and Kashmir Bank">Jammu and Kashmir Bank</option>
+                                    <option value="Karnataka Bank Ltd">Karnataka Bank Ltd</option>
+                                    <option value="Karur Vysya Bank">Karur Vysya Bank</option>
+                                    <option value="Kotak Bank">Kotak Bank</option>
+                                    <option value="Laxmi Vilas Bank">Laxmi Vilas Bank</option>
+                                    <option value="Oriental Bank of Commerce">Oriental Bank of Commerce</option>
+                                    <option value="Punjab National Bank - Corporate Banking">Punjab National Bank -
+                                        Corporate
+                                        Banking</option>
+                                    <option value="Punjab National Bank - Retail Banking">Punjab National Bank - Retail
+                                        Banking
+                                    </option>
+                                    <option value="Punjab & Sind Bank">Punjab & Sind Bank</option>
+                                    <option value="Shamrao Vitthal Co-operative Bank">Shamrao Vitthal Co-operative Bank
+                                    </option>
+                                    <option value="South Indian Bank">South Indian Bank</option>
+                                    <option value="State Bank of Bikaner & Jaipur">State Bank of Bikaner & Jaipur
+                                    </option>
+                                    <option value="State Bank of Hyderabad">State Bank of Hyderabad</option>
+                                    <option value="State Bank of India">State Bank of India</option>
+                                    <option value="State Bank of Mysore">State Bank of Mysore</option>
+                                    <option value="State Bank of Patiala">State Bank of Patiala</option>
+                                    <option value="State Bank of Travancore">State Bank of Travancore</option>
+                                    <option value="Syndicate Bank">Syndicate Bank</option>
+                                    <option value="Tamilnad Mercantile Bank Ltd.">Tamilnad Mercantile Bank Ltd.</option>
+                                    <option value="UCO Bank">UCO Bank</option>
+                                    <option value="Union Bank of India">Union Bank of India</option>
+                                    <option value="United Bank of India">United Bank of India</option>
+                                    <option value="Vijaya Bank">Vijaya Bank</option>
+                                    <option value="Yes Bank Ltd">Yes Bank Ltd</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="accountNo" class="form-label">Account Number :</label>
+                                <input type="text" class="form-control" id="accountNo" name="accountNo">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="IFSCCode" class="form-label">IFSC Code :</label>
+                                <input type="text" class="form-control" id="IFSCCode" name="IFSCCode">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyAadhaarCardFront" class="form-label">Aadhaar Card (Front) :</label>
+                                <input type="file" class="form-control" id="partyAadhaarCardFront"
+                                    name="partyAadhaarCardFront">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyAadhaarCardBack" class="form-label">Aadhaar Card (Back) :</label>
+                                <input type="file" class="form-control" id="partyAadhaarCardBack"
+                                    name="partyAadhaarCardBack">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyPANCard" class="form-label">PAN Card :</label>
+                                <input type="file" class="form-control" id="partyPANCard" name="partyPANCard">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="partyCancelledCheque" class="form-label">Cancelled Cheque :</label>
+                                <input type="file" class="form-control" id="partyCancelledCheque"
+                                    name="partyCancelledCheque">
+                            </div>
+                            <br>
+
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-5">
+                            <h3>CURRENT INFRASTRUCTURE</h3>
+                            <p>*currently handled companies</p>
+                            <div class="form-group mb-3">
+                                <label for="companyName1" class="form-label">Company Name 1 :</label>
+                                <input type="text" class="form-control" id="companyName1" name="companyName1">
+
+                                <label for="companyCategory1" class="form-label">Company Category :</label>
+                                <select name="companyCategory1" id="companyCategory1" class="form-select">
+                                    <option value="">---Select Category---</option>
+                                    <option value="1">Personal Care</option>
+                                    <option value="2">Foods</option>
+                                    <option value="3">Beverages</option>
+                                    <option value="4">Food and Beverages</option>
+                                    <option value="">Ice-creams</option>
+                                    <option value="">Deo</option>
+                                    <option value="">FMCG</option>
+                                    <option value="">Others</option>
+                                </select>
+
+                                <label for="outletCovered1" class="form-label">Outlets Covered :</label>
+                                <input type="number" class="form-control" id="outletCovered1" name="outletCovered1">
+
+                                <label for="salesmanCount1" class="form-label">No. of Salesman :</label>
+                                <input type="number" class="form-control" id="salesmanCount1" name="salesmanCount1">
+
+                                <label for="vehicleCount1" class="form-label">No. of Units (Vehicles) :</label>
+                                <input type="number" class="form-control" id="vehicleCount1" name="vehicleCount1">
+
+                                <label for="approxTurnover1" class="form-label">Approx. Turnover :</label>
+                                <input type="number" class="form-control" id="approxTurnover1" name="approxTurnover1">
+
+                                <label for="approxInvestment1" class="form-label">Approx. Investment :</label>
+                                <input type="number" class="form-control" id="approxInvestment1"
+                                    name="approxInvestment1">
+
+                                <label for="investmentProof1" class="form-label">proof of company invoice :</label>
+                                <input type="file" class="form-control" id="investmentProof1" name="investmentProof1">
+                            </div>
+                            <br><br>
+                            <div class="form-group mb-3">
+                                <label for="companyName2" class="form-label">Company Name 2 :</label>
+                                <input type="text" class="form-control" id="companyName2" name="companyName2">
+
+                                <label for="companyCategory2" class="form-label">Company Category :</label>
+                                <select name="companyCategory2" id="companyCategory2" class="form-select">
+                                    <option value="">---Select Category---</option>
+                                    <option value="1">Personal Care</option>
+                                    <option value="2">Foods</option>
+                                    <option value="3">Beverages</option>
+                                    <option value="4">Food and Beverages</option>
+                                    <option value="">Ice-creams</option>
+                                    <option value="">Deo</option>
+                                    <option value="">FMCG</option>
+                                    <option value="">Others</option>
+                                </select>
+
+                                <label for="outletCovered2" class="form-label">Outlets Covered :</label>
+                                <input type="number" class="form-control" id="outletCovered2" name="outletCovered2">
+
+                                <label for="salesmanCount2" class="form-label">No. of Salesman :</label>
+                                <input type="number" class="form-control" id="salesmanCount2" name="salesmanCount2">
+
+                                <label for="vehicleCount2" class="form-label">No. of Units (Vehicles) :</label>
+                                <input type="number" class="form-control" id="vehicleCount2" name="vehicleCount2">
+
+                                <label for="approxTurnover2" class="form-label">Approx. Turnover :</label>
+                                <input type="number" class="form-control" id="approxTurnover2" name="approxTurnover2">
+
+                                <label for="approxInvestment2" class="form-label">Approx. Investment :</label>
+                                <input type="number" class="form-control" id="approxInvestment2"
+                                    name="approxInvestment2">
+
+                                <label for="investmentProof2" class="form-label">proof of company invoice :</label>
+                                <input type="file" class="form-control" id="investmentProof2" name="investmentProof2">
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-6">
+                            <h3>PROPOSED UG INFRASTRUCTURE</h3>
+                            <div class="form-group mb-3">
+                                <label for="proposedOutletCovered" class="form-label">Proposed Outlets to be Covered
+                                    :</label>
+                                <input type="number" class="form-control" id="proposedOutletCovered"
+                                    name="proposedOutletCovered">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="routesCount" class="form-label">No. of Routes :</label>
+                                <input type="number" class="form-control" id="routesCount" name="routesCount">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="proposedSalesmanCount" class="form-label">No. of Salesman :</label>
+                                <input type="number" class="form-control" id="proposedSalesmanCount"
+                                    name="proposedSalesmanCount">
+                            </div>
+                            {{!-- <div class="form-group mb-3">
+                                <label for="proposedTwoWheelerCount" class="form-label">No. of 2 Wheelers :</label>
+                                <input type="number" class="form-control" id="proposedTwoWheelerCount"
+                                    name="proposedTwoWheelerCount">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="proposedFourWheelerCount" class="form-label">No. of 4 Wheelers :</label>
+                                <input type="number" class="form-control" id="proposedFourWheelerCount"
+                                    name="proposedFourWheelerCount">
+                            </div> --}}
+                            <div class="form-group mb-3">
+                                <label for="proposedVehicleCount" class="form-label">No. of Wheelers :</label>
+                                <input type="number" class="form-control" id="proposedVehicleCount"
+                                    name="proposedVehicleCount">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="expectedTurnover" class="form-label">Expected Turnover :</label>
+                                <input type="number" class="form-control" id="expectedTurnover" name="expectedTurnover">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="stockNorms" class="form-label">Stock Norm in Days (LEAD TIME + BUFFER
+                                    STOCK)</label>
+                                <input type="number" class="form-control" id="stockNorms" name="stockNorms">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="invoiceFrequency" class="form-label">Frequency of Invoice :</label>
+                                <select name="invoiceFrequency" id="invoiceFrequency" class="form-select">
+                                    <option value="">---Select Frequency---</option>
+                                    <option value="1">Weekly</option>
+                                    <option value="2">Biweekly</option>
+                                    <option value="3">Fortnightly</option>
+                                </select>
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-7">
+                            <h3>IT INFRASTRUCTURE</h3>
+                            <div class="form-group mb-3">
+                                <label for="compAvailable" class="form-label">Computer Availability :</label>
+                                <input type="radio" id="compAvailableYes" name="compAvailable" value="yes">
+                                <label for="compAvailableYes">Yes</label>
+                                <input type="radio" id="compAvailableNo" name="compAvailable" value="no">
+                                <label for="compAvailableNo">No</label>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="compCount" class="form-label">No. of Computers :</label>
+                                <input type="number" class="form-control" id="compCount" name="compCount">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="internetConnection" class="form-label">Internet Connection :</label>
+                                <input type="radio" id="internetConnectionYes" name="internetConnection" value="yes">
+                                <label for="internetConnectionYes">Yes</label>
+                                <input type="radio" id="internetConnectionNo" name="internetConnection" value="no">
+                                <label for="internetConnectionNo">No</label>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="RSConnectCompatible" class="form-label">Compatible with RS Connect :</label>
+                                <input type="radio" id="RSConnectCompatibleYes" name="RSConnectCompatible" value="yes">
+                                <label for="RSConnectCompatibleYes">Yes</label>
+                                <input type="radio" id="RSConnectCompatibleNo" name="RSConnectCompatible" value="no">
+                                <label for="RSConnectCompatibleNo">No</label>
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+
+                        <div class="step step-8">
+                            <h3>UPLOAD PICTURES</h3>
+                            <div class="form-group mb-3">
+                                <label for="ownerPic" class="form-label">Owner's Pic :</label>
+                                <input type="file" class="form-control" id="ownerPic" name="ownerPic">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="officeGate" class="form-label">Office Main Gate :</label>
+                                <input type="file" class="form-control" id="officeGate" name="officeGate">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="godownPic1" class="form-label">Godown Pic 1 :</label>
+                                <input type="file" class="form-control" id="godownPic1" name="godownPic1">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="godownPic2" class="form-label">Godown Pic 2 :</label>
+                                <input type="file" class="form-control" id="godownPic2" name="godownPic2">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="deliveryVehPic" class="form-label">Delivery Vehicle Pic :</label>
+                                <input type="file" class="form-control" id="deliveryVehPic" name="deliveryVehPic">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="deliveryVehRC" class="form-label">Delivery Vehicle RC :</label>
+                                <input type="file" class="form-control" id="deliveryVehRC" name="deliveryVehRC">
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="button" class="btn btn-primary next-step">Next</button>
+                        </div>
+                        <div class="step step-9">
+                            <h3>APPROVERS</h3>
+                            <div class="form-group mb-3">
+                                <label for="firstApprover" class="form-label">First Level Approver :</label>
+                                <input type="text" id="firstApprover" name="firstApprover" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="secondApprover" class="form-label">Second Level Approver :</label>
+                                <input type="text" id="secondApprover" name="secondApprover" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="thirdApprover" class="form-label">Third Level Approver :</label>
+                                <input type="text" id="thirdApprover" name="thirdApprover" class="form-control">
+                            </div>
+                            <br>
+                            <button type="button" class="btn btn-primary prev-step">Previous</button>
+                            <button type="submit" class="btn btn-success" onclick="submitForm()">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
         </div>
     </div>
-    <div id="container" class="container mt-5">
 
-        <form id="multi-step-form">
-            <div class="step step-1" id="step1">
-                <h3>NEW APPOINTMENT</h3>
-                <div class="form-group mb-3">
-                    <label for="appointmentReason" class="form-label">Reason :</label>
-                    <select name="appointmentReason" id="appointmentReason" class="form-select">
-                        <option value="">---Select Reason---</option>
-                        <option value="Replacement">Replacement</option>
-                        <option value="Birfurcation">Birfurcation</option>
-                        <option value="Expansion">Expansion</option>
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="baseTown" class="form-label">Base Town :</label>
-                    <input type="text" id="baseTown" name="baseTown" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="townPopulation" class="form-label">Population :</label>
-                    <select name="townPopulation" id="townPopulation" class="form-select">
-                        <option value="">---Select Population---</option>
-                        <option value="100000">1 lac to 5 lac</option>
-                        <option value="500000">5 lac to 10 lac</option>
-                        <option value="1000000">Above 10 lac</option>
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="townState" class="form-label">State :</label>
-                    {{!-- <input type="text" id="townState" name="townState" class="form-control"> --}}
-                    <select class="form-control" id="townState" name="townState">
-                        <option value="SelectState">---Select State---</option>
-                        <option value="Andra Pradesh">Andra Pradesh</option>
-                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                        <option value="Assam">Assam</option>
-                        <option value="Bihar">Bihar</option>
-                        <option value="Chhattisgarh">Chhattisgarh</option>
-                        <option value="Goa">Goa</option>
-                        <option value="Gujarat">Gujarat</option>
-                        <option value="Haryana">Haryana</option>
-                        <option value="Himachal Pradesh">Himachal Pradesh</option>
-                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                        <option value="Jharkhand">Jharkhand</option>
-                        <option value="Karnataka">Karnataka</option>
-                        <option value="Kerala">Kerala</option>
-                        <option value="Madya Pradesh">Madya Pradesh</option>
-                        <option value="Maharashtra">Maharashtra</option>
-                        <option value="Manipur">Manipur</option>
-                        <option value="Meghalaya">Meghalaya</option>
-                        <option value="Mizoram">Mizoram</option>
-                        <option value="Nagaland">Nagaland</option>
-                        <option value="Orissa">Orissa</option>
-                        <option value="Punjab">Punjab</option>
-                        <option value="Rajasthan">Rajasthan</option>
-                        <option value="Sikkim">Sikkim</option>
-                        <option value="Tamil Nadu">Tamil Nadu</option>
-                        <option value="Telangana">Telangana</option>
-                        <option value="Tripura">Tripura</option>
-                        <option value="Uttaranchal">Uttaranchal</option>
-                        <option value="Uttar Pradesh">Uttar Pradesh</option>
-                        <option value="West Bengal">West Bengal</option>
-                        <option disabled style="background-color:#aaa; color:#fff">UNION Territories</option>
-                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                        <option value="Chandigarh">Chandigarh</option>
-                        <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                        <option value="Daman and Diu">Daman and Diu</option>
-                        <option value="Delhi">Delhi</option>
-                        <option value="Lakshadeep">Lakshadeep</option>
-                        <option value="Pondicherry">Pondicherry</option>
-                    </select>
-                </div>
-                <div class="form-label mb-3">
-                    <label for="townRegion" class="form-label">Region :</label>
-                    <select name="townRegion" id="townRegion" class="form-select">
-                        <option value="">---Select Region---</option>
-                        <option value="North">North</option>
-                        <option value="East">East</option>
-                        <option value="West">West</option>
-                        <option value="South">South</option>
-                    </select>
-                </div>
-
-                <br>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-2" id="step2">
-                <h3>EXIT FORM FOR OLD PARTY</h3>
-                <div class="form-group mb-3">
-                    <label for="sapSSCode" class="form-label">Existing Party's SAP SS Code :</label>
-                    <input type="text" class="form-control" id="sapSSCode" name="sapSSCode">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="existingPartyName" class="form-label">Exisitng Party's Name in SAP :</label>
-                    <select name="existingPartyName" id="existingPartyName" class="form-select">
-                        <option value="">---Select Party---</option>
-                        {{#each partyDetails}}
-                        <option value="{{party_id}}">{{firm_name}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="existingPartyTown" class="form-label">Existing Party's Town :</label>
-                    <input type="text" class="form-control" id="existingPartyTown" name="existingPartyTown">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="existingPartyContact" class="form-label">Exisitng Party's Contact :</label>
-                    <input type="tel" class="form-control" id="existingPartyContact" name="existingPartyContact">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="existingPartyTurnover" class="form-label">Turnover :</label>
-                    <input type="number" class="form-control" id="existingPartyTurnover" name="existingPartyTurnover">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="exitReason" class="form-label">Reason for Replacement / Birfurcation :</label>
-                    <select name="exitReason" id="exitReason" class="form-select" onchange="showTextField()">
-                        <option value="">---Select Reason---</option>
-                        <option value="Not Interested">Not Interested</option>
-                        <option value="Check Bounce">Check Bounce</option>
-                        <option value="Poor Distribution">Poor Distribution</option>
-                        <option value="Financially Weak">Financially Weak</option>
-                        <option value="Coverage Increase">Coverage Increase</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    <input type="text" class="form-control" id="otherText" placeholder="Please specify"
-                        oninput="updateOthersOption()" />
-                </div>
-                <div class="form-group mb-3">
-                    <label for="claimSettlementStatus" class="form-label">Status of Claim Settlement :</label>
-                    <input type="radio" id="claimSettlementYes" name="claimSettlementStatus" value="yes">
-                    <label for="claimSettlementYes">Yes</label>
-                    <input type="radio" id="claimSettlementNo" name="claimSettlementStatus" value="no">
-                    <label for="claimSettlementNo">No</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="claimRegarding" class="form-label">Claims Regarding :</label>
-                    <select name="claimRegarding" class="form-select" id="claimRegarding">
-                        <option value="">---Select Reason---</option>
-                        <option value="Damage Claim">Damage Claim</option>
-                        <option value="Secondary Claim">Secondary Claim</option>
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="claimAmount" class="form-label">Claim Amount :</label>
-                    <input type="number" class="form-control" id="claimAmount" name="claimAmount">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="settlementTimeline" class="form-label">Timeline for Settlement :</label>
-                    <input type="date" class="form-control" id="settlementTimeline" name="settlementTimeline">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="uploadNOC" class="form-label">Upload Resignation / NOC :</label>
-                    <input type="file" class="form-control" id="uploadNOC" name="uploadNOC">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="distributionDuration" class="form-label">Duration of distribution with UG (in Years)
-                        :</label>
-                    <input type="number" class="form-control" id="distributionDuration" name="distributionDuration">
-                </div>
-
-                <br>
-
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-3" id="step3">
-                <h3>DETAILS OF NEW PARTY</h3>
-                <div class="form-group mb-3">
-                    <label for="firmName" class="form-label">Title of Firm (as per GST/TIN) :</label>
-                    <input type="text" class="form-control" id="firmName" name="firmName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="GSTNo" class="form-label">GST No. :</label>
-                    <input type="text" class="form-control" id="GSTNo" name="GSTNo">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="GSTCertficate" class="form-label">Upload GST Certificate :</label>
-                    <input type="file" class="form-control" id="GSTCertficate" name="GSTCertficate">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="firmAddress" class="form-label">Address :</label>
-                    <textarea class="form-control" id="firmAddress" name="firmAddress"></textarea>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="cityName" class="form-label">City/Town :</label>
-                    <input type="text" class="form-control" id="cityName" name="cityName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="stateName" class="form-label">State :</label>
-                    <input type="text" class="form-control" id="stateName" name="stateName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="pinCode" class="form-label">Pin Code :</label>
-                    <input type="number" class="form-control" id="pinCode" name="pinCode">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="warehouseSize" class="form-label">Warehouse Size (carpet area in Sq. Ft.) :</label>
-                    <input type="number" class="form-control" id="warehouseSize" name="warehouseSize">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="contactPersonName" class="form-label">Name of Contact Person :</label>
-                    <input type="text" class="form-control" id="contactPersonName" name="contactPersonName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="mobileNo" class="form-label">Mobile Number</label>
-                    <input type="tel" class="form-control" id="mobileNo" name="mobileNo">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="emailId" class="form-label">Email ID :</label>
-                    <input type="email" class="form-control" id="emailId" name="emailId">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="areaCovered" class="form-label">Areas to be Covered by the New Party :</label>
-                    <input type="text" class="form-control" id="areaCovered" name="areaCovered">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyType" class="form-label">Type of Firm :</label>
-                    <select name="partyType" id="partyType" class="form-select">
-                        <option value="">---Select Type---</option>
-                        <option value="1">Sole Proprietor</option>
-                        <option value="2">Partnership</option>
-                        <option value="3">Pvt. Ltd. Company</option>
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="firmCertificate" class="form-label">Upload Firm Certificate :</label>
-                    <input type="file" class="form-control" id="firmCertificate" name="firmCertificate">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyTurnover" class="form-label">Current Turnover :</label>
-                    <input type="number" class="form-control" id="partyTurnover" name="partyTurnover">
-                </div>
-
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-4">
-                <h3>BANK DETAILS OF NEW PARTY</h3>
-                <div class="form-group mb-3">
-                    <label for="accountHolderName" class="form-label">Account Holder Name :</label>
-                    <input type="text" class="form-control" id="accountHolderName" name="accountHolderName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="bankName" class="form-label">Bank Name :</label>
-                    <input type="text" class="form-control" id="bankName" name="bankName">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="branchName" class="form-label">Branch Name :</label>
-                    {{!-- <input type="text" class="form-control" id="branchName" name="branchName"> --}}
-                    <select name="branchName" id="branchName" class="form-select">
-                        <option value="">---Select Branch---</option>
-                        <option value="Allahabad Bank">Allahabad Bank</option>
-                        <option value="Andhra Bank">Andhra Bank</option>
-                        <option value="Axis Bank">Axis Bank</option>
-                        <option value="Bank of Bahrain and Kuwait">Bank of Bahrain and Kuwait</option>
-                        <option value="Bank of Baroda">Bank of Baroda</option>
-                        <option value="Bank of India">Bank of India</option>
-                        <option value="Bank of Maharashtra">Bank of Maharashtra</option>
-                        <option value="Canara Bank">Canara Bank</option>
-                        <option value="Central Bank of India">Central Bank of India</option>
-                        <option value="City Union Bank">City Union Bank</option>
-                        <option value="Corporation Bank">Corporation Bank</option>
-                        <option value="Deutsche Bank">Deutsche Bank</option>
-                        <option value="Development Credit Bank">Development Credit Bank</option>
-                        <option value="Dhanlaxmi Bank">Dhanlaxmi Bank</option>
-                        <option value="Federal Bank">Federal Bank</option>
-                        <option value="ICICI Bank">ICICI Bank</option>
-                        <option value="IDBI Bank">IDBI Bank</option>
-                        <option value="Indian Bank">Indian Bank</option>
-                        <option value="Indian Overseas Bank">Indian Overseas Bank</option>
-                        <option value="IndusInd Bank">IndusInd Bank</option>
-                        <option value="ING Vysya Bank">ING Vysya Bank</option>
-                        <option value="Jammu and Kashmir Bank">Jammu and Kashmir Bank</option>
-                        <option value="Karnataka Bank Ltd">Karnataka Bank Ltd</option>
-                        <option value="Karur Vysya Bank">Karur Vysya Bank</option>
-                        <option value="Kotak Bank">Kotak Bank</option>
-                        <option value="Laxmi Vilas Bank">Laxmi Vilas Bank</option>
-                        <option value="Oriental Bank of Commerce">Oriental Bank of Commerce</option>
-                        <option value="Punjab National Bank - Corporate Banking">Punjab National Bank - Corporate
-                            Banking</option>
-                        <option value="Punjab National Bank - Retail Banking">Punjab National Bank - Retail Banking
-                        </option>
-                        <option value="Punjab & Sind Bank">Punjab & Sind Bank</option>
-                        <option value="Shamrao Vitthal Co-operative Bank">Shamrao Vitthal Co-operative Bank</option>
-                        <option value="South Indian Bank">South Indian Bank</option>
-                        <option value="State Bank of Bikaner & Jaipur">State Bank of Bikaner & Jaipur</option>
-                        <option value="State Bank of Hyderabad">State Bank of Hyderabad</option>
-                        <option value="State Bank of India">State Bank of India</option>
-                        <option value="State Bank of Mysore">State Bank of Mysore</option>
-                        <option value="State Bank of Patiala">State Bank of Patiala</option>
-                        <option value="State Bank of Travancore">State Bank of Travancore</option>
-                        <option value="Syndicate Bank">Syndicate Bank</option>
-                        <option value="Tamilnad Mercantile Bank Ltd.">Tamilnad Mercantile Bank Ltd.</option>
-                        <option value="UCO Bank">UCO Bank</option>
-                        <option value="Union Bank of India">Union Bank of India</option>
-                        <option value="United Bank of India">United Bank of India</option>
-                        <option value="Vijaya Bank">Vijaya Bank</option>
-                        <option value="Yes Bank Ltd">Yes Bank Ltd</option>
-                    </select>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="accountNo" class="form-label">Account Number :</label>
-                    <input type="text" class="form-control" id="accountNo" name="accountNo">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="IFSCCode" class="form-label">IFSC Code :</label>
-                    <input type="text" class="form-control" id="IFSCCode" name="IFSCCode">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyAadhaarCardFront" class="form-label">Aadhaar Card (Front) :</label>
-                    <input type="file" class="form-control" id="partyAadhaarCardFront" name="partyAadhaarCardFront">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyAadhaarCardBack" class="form-label">Aadhaar Card (Back) :</label>
-                    <input type="file" class="form-control" id="partyAadhaarCardBack" name="partyAadhaarCardBack">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyPANCard" class="form-label">PAN Card :</label>
-                    <input type="file" class="form-control" id="partyPANCard" name="partyPANCard">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="partyCancelledCheque" class="form-label">Cancelled Cheque :</label>
-                    <input type="file" class="form-control" id="partyCancelledCheque" name="partyCancelledCheque">
-                </div>
-                <br>
-
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-5">
-                <h3>CURRENT INFRASTRUCTURE</h3>
-                <p>*currently handled companies</p>
-                <div class="form-group mb-3">
-                    <label for="companyName1" class="form-label">Company Name 1 :</label>
-                    <input type="text" class="form-control" id="companyName1" name="companyName1">
-
-                    <label for="companyCategory1" class="form-label">Company Category :</label>
-                    <select name="companyCategory1" id="companyCategory1" class="form-select">
-                        <option value="">---Select Category---</option>
-                        <option value="1">Personal Care</option>
-                        <option value="2">Foods</option>
-                        <option value="3">Beverages</option>
-                        <option value="4">Food and Beverages</option>
-                        <option value="">Ice-creams</option>
-                        <option value="">Deo</option>
-                        <option value="">FMCG</option>
-                        <option value="">Others</option>
-                    </select>
-
-                    <label for="outletCovered1" class="form-label">Outlets Covered :</label>
-                    <input type="number" class="form-control" id="outletCovered1" name="outletCovered1">
-
-                    <label for="salesmanCount1" class="form-label">No. of Salesman :</label>
-                    <input type="number" class="form-control" id="salesmanCount1" name="salesmanCount1">
-
-                    <label for="vehicleCount1" class="form-label">No. of Units (Vehicles) :</label>
-                    <input type="number" class="form-control" id="vehicleCount1" name="vehicleCount1">
-
-                    <label for="approxTurnover1" class="form-label">Approx. Turnover :</label>
-                    <input type="number" class="form-control" id="approxTurnover1" name="approxTurnover1">
-
-                    <label for="approxInvestment1" class="form-label">Approx. Investment :</label>
-                    <input type="number" class="form-control" id="approxInvestment1" name="approxInvestment1">
-
-                    <label for="investmentProof1" class="form-label">proof of company invoice :</label>
-                    <input type="file" class="form-control" id="investmentProof1" name="investmentProof1">
-                </div>
-                <br><br>
-                <div class="form-group mb-3">
-                    <label for="companyName2" class="form-label">Company Name 2 :</label>
-                    <input type="text" class="form-control" id="companyName2" name="companyName2">
-
-                    <label for="companyCategory2" class="form-label">Company Category :</label>
-                    <select name="companyCategor2" id="companyCategory2" class="form-select">
-                        <option value="">---Select Category---</option>
-                        <option value="1">Personal Care</option>
-                        <option value="2">Foods</option>
-                        <option value="3">Beverages</option>
-                        <option value="4">Food and Beverages</option>
-                        <option value="">Ice-creams</option>
-                        <option value="">Deo</option>
-                        <option value="">FMCG</option>
-                        <option value="">Others</option>
-                    </select>
-
-                    <label for="outletCovered2" class="form-label">Outlets Covered :</label>
-                    <input type="number" class="form-control" id="outletCovered2" name="outletCovered2">
-
-                    <label for="salesmanCount2" class="form-label">No. of Salesman :</label>
-                    <input type="number" class="form-control" id="salesmanCount2" name="salesmanCount2">
-
-                    <label for="vehicleCount2" class="form-label">No. of Units (Vehicles) :</label>
-                    <input type="number" class="form-control" id="vehicleCount2" name="vehicleCount2">
-
-                    <label for="approxTurnover2" class="form-label">Approx. Turnover :</label>
-                    <input type="number" class="form-control" id="approxTurnover2" name="approxTurnover2">
-
-                    <label for="approxInvestment2" class="form-label">Approx. Investment :</label>
-                    <input type="number" class="form-control" id="approxInvestment2" name="approxInvestment2">
-
-                    <label for="investmentProof2" class="form-label">proof of company invoice :</label>
-                    <input type="file" class="form-control" id="investmentProof2" name="investmentProof2">
-                </div>
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-6">
-                <h3>PROPOSED UG INFRASTRUCTURE</h3>
-                <div class="form-group mb-3">
-                    <label for="proposedOutletCovered" class="form-label">Proposed Outlets to be Covered :</label>
-                    <input type="number" class="form-control" id="proposedOutletCovered" name="proposedOutletCovered">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="routesCount" class="form-label">No. of Routes :</label>
-                    <input type="number" class="form-control" id="routesCount" name="routesCount">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="proposedSalesmanCount" class="form-label">No. of Salesman :</label>
-                    <input type="number" class="form-control" id="proposedSalesmanCount" name="proposedSalesmanCount">
-                </div>
-                {{!-- <div class="form-group mb-3">
-                    <label for="proposedTwoWheelerCount" class="form-label">No. of 2 Wheelers :</label>
-                    <input type="number" class="form-control" id="proposedTwoWheelerCount"
-                        name="proposedTwoWheelerCount">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="proposedFourWheelerCount" class="form-label">No. of 4 Wheelers :</label>
-                    <input type="number" class="form-control" id="proposedFourWheelerCount"
-                        name="proposedFourWheelerCount">
-                </div> --}}
-                <div class="form-group mb-3">
-                    <label for="proposedVehicleCount" class="form-label">No. of Wheelers :</label>
-                    <input type="number" class="form-control" id="proposedVehicleCount"
-                        name="proposedVehicleCount">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="expectedTurnover" class="form-label">Expected Turnover :</label>
-                    <input type="number" class="form-control" id="expectedTurnover" name="expectedTurnover">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="stockNorms" class="form-label">Stock Norm in Days (LEAD TIME + BUFFER STOCK)</label>
-                    <input type="number" class="form-control" id="stockNorms" name="stockNorms">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="invoiceFrequency" class="form-label">Frequency of Invoice :</label>
-                    <select name="invoiceFrequency" id="invoiceFrequency" class="form-select">
-                        <option value="">---Select Frequency---</option>
-                        <option value="1">Weekly</option>
-                        <option value="2">Biweekly</option>
-                        <option value="3">Fortnightly</option>
-                    </select>
-                </div>
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-7">
-                <h3>IT INFRASTRUCTURE</h3>
-                <div class="form-group mb-3">
-                    <label for="compAvailable" class="form-label">Computer Availability :</label>
-                    <input type="radio" id="compAvailableYes" name="compAvailable" value="yes">
-                    <label for="compAvailableYes">Yes</label>
-                    <input type="radio" id="compAvailableNo" name="compAvailable" value="no">
-                    <label for="compAvailableNo">No</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="compCount" class="form-label">No. of Computers :</label>
-                    <input type="number" class="form-control" id="compCount" name="compCount">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="internetConnection" class="form-label">Internet Connection :</label>
-                    <input type="radio" id="internetConnectionYes" name="internetConnection" value="yes">
-                    <label for="internetConnectionYes">Yes</label>
-                    <input type="radio" id="internetConnectionNo" name="internetConnection" value="no">
-                    <label for="internetConnectionNo">No</label>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="RSConnectCompatible" class="form-label">Compatible with RS Connect :</label>
-                    <input type="radio" id="RSConnectCompatibleYes" name="RSConnectCompatible" value="yes">
-                    <label for="RSConnectCompatibleYes">Yes</label>
-                    <input type="radio" id="RSConnectCompatibleNo" name="RSConnectCompatible" value="no">
-                    <label for="RSConnectCompatibleNo">No</label>
-                </div>
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-
-            <div class="step step-8">
-                <h3>UPLOAD PICTURES</h3>
-                <div class="form-group mb-3">
-                    <label for="ownerPic" class="form-label">Owner's Pic :</label>
-                    <input type="file" class="form-control" id="ownerPic" name="ownerPic">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="officeGate" class="form-label">Office Main Gate :</label>
-                    <input type="file" class="form-control" id="officeGate" name="officeGate">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="godownPic1" class="form-label">Godown Pic 1 :</label>
-                    <input type="file" class="form-control" id="godownPic1" name="godownPic1">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="godownPic2" class="form-label">Godown Pic 2 :</label>
-                    <input type="file" class="form-control" id="godownPic2" name="godownPic2">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="deliveryVehPic" class="form-label">Delivery Vehicle Pic :</label>
-                    <input type="file" class="form-control" id="deliveryVehPic" name="deliveryVehPic">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="deliveryVehRC" class="form-label">Delivery Vehicle RC :</label>
-                    <input type="file" class="form-control" id="deliveryVehRC" name="deliveryVehRC">
-                </div>
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="button" class="btn btn-primary next-step">Next</button>
-            </div>
-            <div class="step step-9">
-                <h3>APPROVERS</h3>
-                <div class="form-group mb-3">
-                    <label for="firstApprover" class="form-label">First Level Approver :</label>
-                    <input type="text" id="firstApprover" name="firstApprover" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="secondApprover" class="form-label">Second Level Approver :</label>
-                    <input type="text" id="secondApprover" name="secondApprover" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="thirdApprover" class="form-label">Third Level Approver :</label>
-                    <input type="text" id="thirdApprover" name="thirdApprover" class="form-control">
-                </div>
-                <br>
-                <button type="button" class="btn btn-primary prev-step">Previous</button>
-                <button type="submit" class="btn btn-success" onclick="submitForm()">Submit</button>
-            </div>
-
-        </form>
-    </div>
 
 </body>
 
