@@ -258,7 +258,7 @@ body {
     background-color: currentColor;
 }
 
-#multi-step-form {
+#appointmentForm {
     background-color: rgb(255, 177, 2);
     /* background-color: #9dcafe; */
     padding: 20px;
@@ -301,7 +301,7 @@ body {
     z-index: -1;
 }
 
-#multi-step-form {
+#appointmentForm {
     overflow-x: hidden;
 }
 

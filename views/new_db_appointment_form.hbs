@@ -34,7 +34,7 @@
                 </div>
                 <div id="container" class="container mt-5 form-container">
 
-                    <form id="multi-step-form" class="mb-5" style="">
+                    <form id="appointmentForm" class="mb-5" style="">
                         <div class="step step-1" id="step1">
                             <h3>NEW APPOINTMENT</h3>
                             <br>
@@ -67,47 +67,7 @@
                             <div class="form-group mb-3">
                                 <label for="townState" class="form-label">State :</label>
                                 <input type="text" id="townState" name="townState" class="form-control">
-                                {{!-- <select class="form-control" id="townState">
-                                    <option value="SelectState">---Select State---</option>
-                                    <option value="Andra Pradesh">Andra Pradesh</option>
-                                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                                    <option value="Assam">Assam</option>
-                                    <option value="Bihar">Bihar</option>
-                                    <option value="Chhattisgarh">Chhattisgarh</option>
-                                    <option value="Goa">Goa</option>
-                                    <option value="Gujarat">Gujarat</option>
-                                    <option value="Haryana">Haryana</option>
-                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
-                                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-                                    <option value="Jharkhand">Jharkhand</option>
-                                    <option value="Karnataka">Karnataka</option>
-                                    <option value="Kerala">Kerala</option>
-                                    <option value="Madya Pradesh">Madya Pradesh</option>
-                                    <option value="Maharashtra">Maharashtra</option>
-                                    <option value="Manipur">Manipur</option>
-                                    <option value="Meghalaya">Meghalaya</option>
-                                    <option value="Mizoram">Mizoram</option>
-                                    <option value="Nagaland">Nagaland</option>
-                                    <option value="Orissa">Orissa</option>
-                                    <option value="Punjab">Punjab</option>
-                                    <option value="Rajasthan">Rajasthan</option>
-                                    <option value="Sikkim">Sikkim</option>
-                                    <option value="Tamil Nadu">Tamil Nadu</option>
-                                    <option value="Telangana">Telangana</option>
-                                    <option value="Tripura">Tripura</option>
-                                    <option value="Uttaranchal">Uttaranchal</option>
-                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                    <option value="West Bengal">West Bengal</option>
-                                    <option disabled style="background-color:#aaa; color:#fff">UNION Territories
-                                    </option>
-                                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-                                    <option value="Chandigarh">Chandigarh</option>
-                                    <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-                                    <option value="Daman and Diu">Daman and Diu</option>
-                                    <option value="Delhi">Delhi</option>
-                                    <option value="Lakshadeep">Lakshadeep</option>
-                                    <option value="Pondicherry">Pondicherry</option>
-                                </select> --}}
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="townPopulation" class="form-label">Population :</label>
@@ -137,17 +97,18 @@
                         <div class="step step-2" id="step2">
                             <h3>EXIT FORM FOR OLD PARTY</h3>
                             <div class="form-group mb-3">
-                                <label for="sapSSCode" class="form-label">Existing Party's SAP SS Code :</label>
-                                <input type="text" class="form-control" id="sapSSCode" name="sapSSCode">
+                                <label for="sapCode" class="form-label">Existing Party's SAP SS/DB Code :</label>
+                                <input type="text" class="form-control" id="sapCode" name="sapCode">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="existingPartyName" class="form-label">Exisitng Party's Name in SAP :</label>
-                                <select name="existingPartyName" id="existingPartyName" class="form-select">
+                                {{!-- <select name="existingPartyName" id="existingPartyName" class="form-select">
                                     <option value="">---Select Party---</option>
                                     {{#each partyDetails}}
                                     <option value="{{party_id}}">{{firm_name}}</option>
                                     {{/each}}
-                                </select>
+                                </select> --}}
+                                <input type="text" class="form-control" id="existingPartyName" name="existingPartyName">
                             </div>
                             <div class="form-group mb-3">
                                 <label for="existingPartyTown" class="form-label">Existing Party's Town :</label>
@@ -193,6 +154,7 @@
                                     <option value="">---Select Reason---</option>
                                     <option value="Damage Claim">Damage Claim</option>
                                     <option value="Secondary Claim">Secondary Claim</option>
+                                    <option value="Damage and Secondary Claim">Damage and Secondary Claim</option>
                                 </select>
                             </div>
                             <div class="form-group mb-3">
@@ -232,6 +194,7 @@
                             <div class="form-group mb-3">
                                 <label for="GSTNo" class="form-label">GST No. :</label>
                                 <input type="text" class="form-control" id="GSTNo" name="GSTNo">
+                                <div id="GSTcheck"></div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="GSTCertficate" class="form-label">Upload GST Certificate :</label>
@@ -240,6 +203,10 @@
                             <div class="form-group mb-3">
                                 <label for="firmAddress" class="form-label">Address :</label>
                                 <textarea class="form-control" id="firmAddress" name="firmAddress"></textarea>
+                                <div class="char-count" id="charCount">0 characters</div>
+                                <div class="invalid-feedback" id="error-message">
+                                    Address must be at least 25 characters long.
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="cityName" class="form-label">City/Town :</label>
@@ -271,8 +238,8 @@
                                 <input type="email" class="form-control" id="emailId" name="emailId">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="areaCovered" class="form-label">Areas to be Covered by the New Party
-                                    :</label>
+                                <label for="areaCovered" class="form-label">Areas to be Covered by the New Party (comma
+                                    separated) :</label>
                                 <input type="text" class="form-control" id="areaCovered" name="areaCovered">
                             </div>
                             <div class="form-group mb-3">
@@ -300,7 +267,7 @@
                             </div>
                         </div>
 
-                        <div class="step step-4">
+                        <div class="step step-4" id="step4">
                             <h3>BANK DETAILS OF NEW PARTY</h3>
                             <div class="form-group mb-3">
                                 <label for="accountHolderName" class="form-label">Account Holder Name :</label>
@@ -317,60 +284,7 @@
                             <div class="form-group mb-3">
                                 <label for="bankName" class="form-label">Bank Name :</label>
                                 <input type="text" class="form-control" id="bankName" name="bankName">
-                                {{!-- <select name="bankName" id="bankName" class="form-select">
-                                    <option value="">---Select Bank---</option>
-                                    <option value="Allahabad Bank">Allahabad Bank</option>
-                                    <option value="Andhra Bank">Andhra Bank</option>
-                                    <option value="Axis Bank">Axis Bank</option>
-                                    <option value="Bank of Bahrain and Kuwait">Bank of Bahrain and Kuwait</option>
-                                    <option value="Bank of Baroda">Bank of Baroda</option>
-                                    <option value="Bank of India">Bank of India</option>
-                                    <option value="Bank of Maharashtra">Bank of Maharashtra</option>
-                                    <option value="Canara Bank">Canara Bank</option>
-                                    <option value="Central Bank of India">Central Bank of India</option>
-                                    <option value="City Union Bank">City Union Bank</option>
-                                    <option value="Corporation Bank">Corporation Bank</option>
-                                    <option value="Deutsche Bank">Deutsche Bank</option>
-                                    <option value="Development Credit Bank">Development Credit Bank</option>
-                                    <option value="Dhanlaxmi Bank">Dhanlaxmi Bank</option>
-                                    <option value="Federal Bank">Federal Bank</option>
-                                    <option value="ICICI Bank">ICICI Bank</option>
-                                    <option value="IDBI Bank">IDBI Bank</option>
-                                    <option value="Indian Bank">Indian Bank</option>
-                                    <option value="Indian Overseas Bank">Indian Overseas Bank</option>
-                                    <option value="IndusInd Bank">IndusInd Bank</option>
-                                    <option value="ING Vysya Bank">ING Vysya Bank</option>
-                                    <option value="Jammu and Kashmir Bank">Jammu and Kashmir Bank</option>
-                                    <option value="Karnataka Bank Ltd">Karnataka Bank Ltd</option>
-                                    <option value="Karur Vysya Bank">Karur Vysya Bank</option>
-                                    <option value="Kotak Bank">Kotak Bank</option>
-                                    <option value="Laxmi Vilas Bank">Laxmi Vilas Bank</option>
-                                    <option value="Oriental Bank of Commerce">Oriental Bank of Commerce</option>
-                                    <option value="Punjab National Bank - Corporate Banking">Punjab National Bank -
-                                        Corporate
-                                        Banking</option>
-                                    <option value="Punjab National Bank - Retail Banking">Punjab National Bank - Retail
-                                        Banking
-                                    </option>
-                                    <option value="Punjab & Sind Bank">Punjab & Sind Bank</option>
-                                    <option value="Shamrao Vitthal Co-operative Bank">Shamrao Vitthal Co-operative Bank
-                                    </option>
-                                    <option value="South Indian Bank">South Indian Bank</option>
-                                    <option value="State Bank of Bikaner & Jaipur">State Bank of Bikaner & Jaipur
-                                    </option>
-                                    <option value="State Bank of Hyderabad">State Bank of Hyderabad</option>
-                                    <option value="State Bank of India">State Bank of India</option>
-                                    <option value="State Bank of Mysore">State Bank of Mysore</option>
-                                    <option value="State Bank of Patiala">State Bank of Patiala</option>
-                                    <option value="State Bank of Travancore">State Bank of Travancore</option>
-                                    <option value="Syndicate Bank">Syndicate Bank</option>
-                                    <option value="Tamilnad Mercantile Bank Ltd.">Tamilnad Mercantile Bank Ltd.</option>
-                                    <option value="UCO Bank">UCO Bank</option>
-                                    <option value="Union Bank of India">Union Bank of India</option>
-                                    <option value="United Bank of India">United Bank of India</option>
-                                    <option value="Vijaya Bank">Vijaya Bank</option>
-                                    <option value="Yes Bank Ltd">Yes Bank Ltd</option>
-                                </select> --}}
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="branchName" class="form-label">Branch Name :</label>
@@ -403,7 +317,7 @@
                             </div>
                         </div>
 
-                        <div class="step step-5">
+                        <div class="step step-5" id="step5">
                             <h3>CURRENT INFRASTRUCTURE</h3>
                             <p>*currently handled companies</p>
                             <div class="form-group mb-3">
@@ -414,11 +328,11 @@
                                 <select name="companyCategory1" id="companyCategory1" class="form-select">
                                     <option value="">---Select Category---</option>
                                     <option value="Personal Care & Grooming">Personal Care & Grooming</option>
+                                    <option value="Baby Care">Baby Care</option>
                                     <option value="Beauty & Cosmetics">Beauty & Cosmetics</option>
                                     <option value="Food and Beverages">Food and Beverages</option>
                                     <option value="Health Care">Health Care</option>
                                     <option value="FMCG">FMCG</option>
-                                    <option value="Others">Others</option>
                                 </select>
 
 
@@ -451,11 +365,11 @@
                                 <select name="companyCategory2" id="companyCategory2" class="form-select">
                                     <option value="">---Select Category---</option>
                                     <option value="Personal Care & Grooming">Personal Care & Grooming</option>
+                                    <option value="Baby Care">Baby Care</option>
                                     <option value="Beauty & Cosmetics">Beauty & Cosmetics</option>
                                     <option value="Food and Beverages">Food and Beverages</option>
                                     <option value="Health Care">Health Care</option>
                                     <option value="FMCG">FMCG</option>
-                                    <option value="Others">Others</option>
                                 </select>
 
                                 <label for="outletCovered2" class="form-label">Outlets Covered :</label>
@@ -485,7 +399,7 @@
                             </div>
                         </div>
 
-                        <div class="step step-6">
+                        <div class="step step-6" id="step6">
                             <h3>PROPOSED UG INFRASTRUCTURE</h3>
                             <div class="form-group mb-3">
                                 <label for="proposedOutletCovered" class="form-label">Proposed Outlets to be Covered
@@ -537,7 +451,7 @@
                             </div>
                         </div>
 
-                        <div class="step step-7">
+                        <div class="step step-7" id="step7">
                             <h3>IT INFRASTRUCTURE</h3>
                             <div class="form-group mb-3">
                                 <label for="compAvailable" class="form-label">Computer Availability :</label>
@@ -570,7 +484,7 @@
                             </div>
                         </div>
 
-                        <div class="step step-8">
+                        <div class="step step-8" id="step8">
                             <h3>UPLOAD PICTURES</h3>
                             <div class="form-group mb-3">
                                 <label for="ownerPic" class="form-label">Owner's Pic :</label>
@@ -592,35 +506,35 @@
                                 <label for="deliveryVehPic" class="form-label">Delivery Vehicle Pic :</label>
                                 <input type="file" class="form-control" id="deliveryVehPic" name="deliveryVehPic">
                             </div>
-                            {{!-- <div class="form-group mb-3">
-                                <label for="deliveryVehRC" class="form-label">Delivery Vehicle RC :</label>
-                                <input type="file" class="form-control" id="deliveryVehRC" name="deliveryVehRC">
-                            </div> --}}
+
                             <div class="sticky-bottom sticky-buttons">
                                 <button type="button" class="btn btn-primary prev-step">Previous</button>
                                 <button type="button" class="btn btn-primary next-step">Next</button>
                             </div>
                         </div>
-                        <div class="step step-9">
+
+                        <div class="step step-9" id="step9">
                             <h3>APPROVERS</h3>
                             <div class="form-group mb-3">
                                 <label for="firstApprover" class="form-label">First Level Approver :</label>
-                                <input type="text" id="firstApprover" name="firstApprover" class="form-control">
+                                <select id="firstApprover" name="firstApprover" class="form-control">
+                                    <option value="{{userInfo.employee_id}}" selected>{{userInfo.employee_name}} - {{userInfo.employee_designation}}
+                                    </option>
+                                </select>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="secondApprover" class="form-label">Second Level Approver :</label>
-                                <input type="text" id="secondApprover" name="secondApprover" class="form-control">
+                                <select id="secondApprover" name="secondApprover" class="form-control"></select>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="thirdApprover" class="form-label">Third Level Approver :</label>
-                                <input type="text" id="thirdApprover" name="thirdApprover" class="form-control">
+                                <select id="thirdApprover" name="thirdApprover" class="form-control"></select>
                             </div>
                             <div class="sticky-bottom sticky-buttons">
                                 <button type="button" class="btn btn-primary prev-step">Previous</button>
                                 <button type="submit" class="btn btn-success" onclick="submitForm()">Submit</button>
                             </div>
                         </div>
-
                     </form>
                 </div>
 
@@ -649,7 +563,7 @@
     }
 
     $(document).ready(function () {
-        $('#multi-step-form').find('.step').slice(1).hide();
+        $('#appointmentForm').find('.step').slice(1).hide();
 
         $(".next-step").click(function () {
             if (currentStep < 10) {
@@ -710,6 +624,85 @@
         }
     });
 
+
+    async function getEmployeeDetails(employeeId) {
+        try {
+            const response = await fetch(`/getEmployeeDetails/${employeeId}`);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error fetching employee details:', error);
+        }
+    }
+
+    async function populateApprovers() {
+        const employeeId = $('#firstApprover').val();
+
+        const firstApprover = await getEmployeeDetails(employeeId);
+        if (!firstApprover || firstApprover.error) {
+            alert('First approver not found');
+            return;
+        }
+
+        console.log('First approver:', firstApprover);
+
+        // Get second approver details (manager of first approver)
+        const secondApprover = await getEmployeeDetails(firstApprover.reporting_to);
+        if (!secondApprover || secondApprover.error) {
+            alert('Second approver not found');
+            return;
+        }
+
+        console.log('Second approver:', secondApprover);
+
+        // Populate the second approver dropdown
+        $('#secondApprover').empty().append(`<option value="${secondApprover.employee_id}">${secondApprover.employee_name} - ${secondApprover.employee_designation}</option>`);
+
+        // Get third approver details (manager of second approver)
+        const thirdApprover = await getEmployeeDetails(secondApprover.reporting_to);
+        if (!thirdApprover || thirdApprover.error) {
+            alert('Third approver not found');
+            return;
+        }
+
+        console.log('Third approver:', thirdApprover);
+
+        // Populate the third approver dropdown
+        $('#thirdApprover').empty().append(`<option value="${thirdApprover.employee_id}">${thirdApprover.employee_name} - ${thirdApprover.employee_designation}</option>`);
+    }
+
+    $(document).ready(function () {
+        populateApprovers();
+    });
+
+    //fetch party detail by sap code
+    document.getElementById('sapCode').addEventListener("blur", function () {
+        var sapCode = document.getElementById('sapCode').value;
+        console.log(sapCode)
+        if (sapCode.length) {
+            $.ajax({
+                url: '/distributor/' + sapCode,
+                type: 'GET',
+                success: function (response) {
+                    console.log('Party details:', response);
+                    document.getElementById('existingPartyName').innerHTML = '';
+                    document.getElementById('existingPartyName').value = response.firm_name;
+                    document.getElementById('existingPartyTown').value = response.address + ', ' + response.city + ', ' + response.state + ', ' + response.pincode;
+                    document.getElementById('existingPartyContact').value = response.mobile;
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching party details:', error);
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'Error fetching party details: ' + error,
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        }
+    });
+
     function showTextField() {
         var selectBox = document.getElementById("exitReason");
         var otherText = document.getElementById("otherText");
@@ -731,6 +724,7 @@
         othersOption.textContent = otherText.value;
     });
 
+    // Fetch town details when pincode is entered
     document.getElementById('townPincode').addEventListener('input', function () {
         var baseTown = document.getElementById('townPincode').value;
         if (baseTown.length === 6) {
@@ -765,6 +759,51 @@
         }
     });
 
+    // Character count for Firm Address
+    document.addEventListener('DOMContentLoaded', function () {
+        var textarea = document.getElementById('firmAddress');
+        var charCount = document.getElementById('charCount');
+        var errorMessage = document.getElementById('error-message');
+
+        textarea.addEventListener('input', function () {
+            var length = textarea.value.length;
+            charCount.textContent = length + ' characters';
+
+            if (length < 25) {
+                charCount.classList.add('invalid');
+                textarea.classList.add('is-invalid');
+                errorMessage.style.display = 'block';
+            } else {
+                charCount.classList.remove('invalid');
+                textarea.classList.remove('is-invalid');
+                errorMessage.style.display = 'none';
+            }
+        });
+
+        document.getElementById('appointmentForm').addEventListener('submit', function (event) {
+            if (textarea.value.length < 25) {
+                event.preventDefault();
+            }
+        });
+    });
+
+    //GST Number Validation
+    document.getElementById('GSTNo').addEventListener('input', function () {
+        var GSTNo = document.getElementById('GSTNo').value;
+        var GSTNoPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+        if (GSTNo === '') {
+            console.log("GST No. is required");
+            document.getElementById('GSTcheck').innerText = "GSTNo is required";
+            document.getElementById('GSTcheck').style.color = 'red';
+        } else if (!GSTNoPattern.test(GSTNo)) {
+            document.getElementById('GSTcheck').innerText = 'Invalid GST Number';
+            document.getElementById('GSTcheck').style.color = 'red';
+        } else {
+            document.getElementById('GSTcheck').innerText = 'GST Number is valid';
+            document.getElementById('GSTcheck').style.color = 'green';
+        }
+    });
+
     // Fetch bank details when IFSC code is entered
     document.getElementById('IFSCCode').addEventListener('input', function () {
         console.log('IFSC code changed');
@@ -787,10 +826,13 @@
         }
     });
 
+
+
+
     function submitForm() {
         event.preventDefault();
 
-        var formData = new FormData(document.getElementById('multi-step-form'));
+        var formData = new FormData(document.getElementById('appointmentForm'));
 
         console.log('Form data:', formData);
 

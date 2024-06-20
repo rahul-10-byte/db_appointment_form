@@ -13,7 +13,7 @@
             {{>navbar}}
             <!-- Page content-->
             <div class="container-fluid">
-                <div class=" mt-5">
+                <div class="p-3 m-5" style="background-color: aliceblue; border-radius:15px">
                     <div class="row">
                         <div class="col-md-12">
                             <h1>Warehouse List</h1>
@@ -90,6 +90,10 @@
     $(document).ready(function () {
         $('#warehouselist').DataTable({
             scrollX: true,
+            fixedColumns: {
+                start: 0,
+                end: 1
+            },
             order: [[0, 'desc']]
         });
 
@@ -97,7 +101,7 @@
             var partyId = $(this).data('party-id');
 
             $.ajax({
-                url: '/api/warehouse/' + partyId,
+                url: '/distributor/' + partyId,
                 method: 'GET',
                 success: function (data) {
                     // Populate the modal with the data received

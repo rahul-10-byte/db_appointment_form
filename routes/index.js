@@ -5,18 +5,67 @@ const mysql = require("mysql2");
 const Joi = require("joi");
 const db = require("../config/db");
 const fs = require("fs");
+const passport = require("passport");
+const session = require("express-session");
+const LocalStrategy = require("passport-local").Strategy;
+const crypto = require("crypto");
+const secretKey = crypto.randomBytes(64).toString("hex");
+const flash = require("connect-flash");
 var router = express.Router();
+
+// Set up connect-flash middleware
+router.use(flash());
 
 // Middleware to parse URL-encoded bodies (as sent by HTML forms)
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
+// Middleware to check if the user is authenticated
+function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        console.log("User is not authenticated. Redirecting to /login.");
+        res.redirect("/login");
+    }
+}
+
+// Login Route
+router.get("/login", (req, res) => {
+    res.render("login.hbs", { message: req.flash("error") });
+});
+
+// Register Route
+router.get("/register", (req, res) => {
+    res.render("register.hbs");
+});
+
+// Passport Authentication for Login
+router.post(
+    "/login",
+    passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/login",
+        failureFlash: true,
+    })
+);
+
+// Logout Route
+router.get("/logout", ensureAuthenticated, (req, res) => {
+    console.log("Logging out user:", req.user); // Log user information before logout
+    req.logout((err) => {
+        if (err) {
+            console.error("Error during logout:", err);
+            return next(err);
+        }
+        console.log("User logged out"); // Log after logout
+        res.redirect("/login");
+    });
+});
+
 // Set up multer storage
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        // console.log('Request body:', req.body);
-        // const firmName = req.body.firmName;
-
         const dir = path.join(
             __dirname,
             "..",
@@ -26,9 +75,7 @@ const storage = multer.diskStorage({
 
         // Create directory if it doesn't exist
         if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, {
-                recursive: true,
-            });
+            fs.mkdirSync(dir, { recursive: true });
         }
 
         cb(null, dir);
@@ -45,8 +92,9 @@ const upload = multer({
     storage: storage,
 });
 
-const dbAppointmentController = require("../controller/dbAppointmentController");
-const warehouseListController = require("../controller/warehouseListController");
+const appointmentController = require("../controller/AppointmentController");
+const distributorController = require("../controller/DistributorController");
+const employeeController = require("../controller/employeeController");
 
 // Joi validation schema
 const appointmentFormSchema = Joi.object({
@@ -123,7 +171,7 @@ const validateAppointmentForm = (req, res, next) => {
     next();
 };
 
-router.get("/", function (req, res, next) {
+router.get("/", ensureAuthenticated, function (req, res, next) {
     res.render("index", { title: "Express" });
 });
 
@@ -131,32 +179,20 @@ router.get("/home", function (req, res, next) {
     res.render("home", { title: "Home" });
 });
 
-router.get("/dbAppointmentForm", dbAppointmentController.dbAppointmentForm);
+router.get("/dbAppointmentForm", appointmentController.dbAppointmentForm);
 
-router.get("/warehouselist", warehouseListController.getWarehouseList);
+router.get("/distributors", distributorController.getDistributorList);
 
-// API endpoint to get warehouse details by party_id
-router.get("/api/warehouse/:party_id", (req, res) => {
-    const partyId = parseInt(req.params.party_id, 10);
-    const query = "SELECT * FROM party_master WHERE party_id = ?";
+router.get("/approvallist", appointmentController.getApprovalList);
 
-    db.query(query, [partyId], (err, results) => {
-        if (err) {
-            console.error("Error executing query:", err);
-            res.status(500).json({ error: "Database query error" });
-            return;
-        }
-
-        if (results.length > 0) {
-            res.json(results[0]);
-        } else {
-            res.status(404).json({ error: "Warehouse not found" });
-        }
-    });
-});
+// API endpoint to get distributor details by party_id
+router.get("/distributor/:party_id", distributorController.getDistributorById);
 
 // route to get approval details
-router.post("/getApprovalList", dbAppointmentController.getApprovalList);
+router.post("/getApprovalList", appointmentController.getApprovalList);
+
+//get Employee Details
+router.get("/getEmployeeDetails/:employeeId", employeeController.getEmployeeDetails);
 
 // Route to handle form submission
 router.post(
@@ -176,10 +212,9 @@ router.post(
         { name: "investmentProof1", maxCount: 1 },
         { name: "investmentProof2", maxCount: 1 },
         { name: "deliveryVehPic", maxCount: 1 },
-        { name: "deliveryVehRC", maxCount: 1 },
     ]),
     validateAppointmentForm,
-    dbAppointmentController.submitAppointmentForm
+    appointmentController.submitAppointmentForm
 );
 
 module.exports = router;

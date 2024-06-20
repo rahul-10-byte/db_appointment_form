@@ -19,15 +19,18 @@ const dbAppointmentController = {
 
     submitAppointmentForm: async (req, res) => {
         const {
+            employeeId,
+            appointmentType,
             appointmentReason,
             baseTown,
             townPopulation,
             townState,
             townRegion,
+            pincode,
             firstApprover,
             secondApprover,
             thirdApprover,
-            sapSSCode,
+            sapCode,
             existingPartyName,
             existingPartyTown,
             existingPartyContact,
@@ -121,14 +124,14 @@ const dbAppointmentController = {
         }
 
         const appointmentData = {
+            employee_id: employeeId,
+            appointment_type: appointmentType,
             appointment_reason: appointmentReason,
             town: baseTown,
             population: townPopulation,
             state: townState,
             region: townRegion,
-            first_level_approver: firstApprover,
-            second_level_approver: secondApprover,
-            third_level_approver: thirdApprover,
+            pincode: pincode,
         };
 
         console.log("Appointment data:", appointmentData);
