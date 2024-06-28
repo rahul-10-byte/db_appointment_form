@@ -13,23 +13,210 @@
             {{>navbar}}
             <!-- Page content-->
             <div class="container-fluid">
-               
-               <div class="m-5">
-                <h1 style="color: aliceblue;">WELCOME, {{userInfo.employee_name}}</h1>
+                <div class="m-5">
+                    <h1 style="color: aliceblue;">Appointment Approvals</h1>
+                    <br><br>
+                    <!-- Tabs navigation -->
+                    <ul class="nav nav-tabs" id="appointmentTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" role="tab" aria-controls="pending" aria-selected="true">Pending</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved" role="tab" aria-controls="approved" aria-selected="false">Approved</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected" role="tab" aria-controls="rejected" aria-selected="false">Rejected</a>
+                        </li>
+                    </ul>
 
-               </div>
-
+                    <!-- Tabs content -->
+                    <div class="tab-content" id="appointmentTabsContent">
+                        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                            <div id="pending-appointments"></div>
+                        </div>
+                        <div class="tab-pane fade" id="approved" role="tabpanel" aria-labelledby="approved-tab">
+                            <div id="approved-appointments"></div>
+                        </div>
+                        <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
+                            <div id="rejected-appointments"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    {{>scripts}}
+
+    <script>
+        // Function to fetch and display pending appointments
+        function fetchPendingAppointments() {
+            const empID = {{userInfo.employee_id}};
+            $.ajax({
+                url: `/${empID}/getPendingAppointments`,
+                type: 'GET',
+                success: function(appointments) {
+                    const pendingAppointmentsDiv = $('#pending-appointments');
+                    pendingAppointmentsDiv.empty(); // Clear previous content
+                    if (appointments.length === 0) {
+                        pendingAppointmentsDiv.append('<br><p style="color: white">No pending appointments found.</p>');
+                    }
+                    appointments.forEach(appointment => {
+                        const appointmentCard = `
+                            <br><br>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Appointment ID: ${appointment.appointment_id}</h5>
+                                    <p class="card-text">Type: ${appointment.appointment_type}</p>
+                                    <p class="card-text">Reason: ${appointment.appointment_reason}</p>
+                                    <p class="card-text">Town: ${appointment.town}</p>
+                                    <p class="card-text">Firm: ${appointment.firm_name}</p>
+                                    <p class="card-text">Status: ${appointment.status}</p>
+                                    <button class="btn btn-success approve-btn" data-id="${appointment.appointment_id}">Approve</button>
+                                    <button class="btn btn-danger reject-btn" data-id="${appointment.appointment_id}">Reject</button>
+                                </div>
+                            </div>
+                        `;
+                        pendingAppointmentsDiv.append(appointmentCard);
+                    });
+                },
+                error: function() {
+                    alert('Failed to fetch pending appointments.');
+                }
+            });
+        }
+
+        // Function to fetch and display approved appointments
+        function fetchApprovedAppointments() {
+            const empID = {{userInfo.employee_id}};
+            $.ajax({
+                url: `/${empID}/getApprovedAppointments`,
+                type: 'GET',
+                success: function(appointments) {
+                    const approvedAppointmentsDiv = $('#approved-appointments');
+                    approvedAppointmentsDiv.empty(); // Clear previous content
+                    if (appointments.length === 0) {
+                        approvedAppointmentsDiv.append('<br><p style="color: white">No approved appointments found.</p>');
+                    }
+                    appointments.forEach(appointment => {
+                        const appointmentCard = `
+                            <br><br>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Appointment ID: ${appointment.appointment_id}</h5>
+                                    <p class="card-text">Type: ${appointment.appointment_type}</p>
+                                    <p class="card-text">Reason: ${appointment.appointment_reason}</p>
+                                    <p class="card-text">Town: ${appointment.town}</p>
+                                    <p class="card-text">Firm: ${appointment.firm_name}</p>
+                                    <p class="card-text">Status: ${appointment.status}</p>
+                                </div>
+                            </div>
+                        `;
+                        approvedAppointmentsDiv.append(appointmentCard);
+                    });
+                },
+                error: function() {
+                    alert('Failed to fetch approved appointments.');
+                }
+            });
+        }
+
+        // Function to fetch and display rejected appointments
+        function fetchRejectedAppointments() {
+            const empID = {{userInfo.employee_id}};
+            $.ajax({
+                url: `/${empID}/getRejectedAppointments`,
+                type: 'GET',
+                success: function(appointments) {
+                    const rejectedAppointmentsDiv = $('#rejected-appointments');
+                    rejectedAppointmentsDiv.empty(); // Clear previous content
+                    if (appointments.length === 0) {
+                        rejectedAppointmentsDiv.append('<br><p style="color: white">No rejected appointments found.</p>');
+                    }
+                    appointments.forEach(appointment => {
+                        const appointmentCard = `
+                            <br><br>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Appointment ID: ${appointment.appointment_id}</h5>
+                                    <p class="card-text">Type: ${appointment.appointment_type}</p>
+                                    <p class="card-text">Reason: ${appointment.appointment_reason}</p>
+                                    <p class="card-text">Town: ${appointment.town}</p>
+                                    <p class="card-text">Firm: ${appointment.firm_name}</p>
+                                    <p class="card-text">Status: ${appointment.status}</p>
+                                </div>
+                            </div>
+                        `;
+                        rejectedAppointmentsDiv.append(appointmentCard);
+                    });
+                },
+                error: function() {
+                    alert('Failed to fetch rejected appointments.');
+                }
+            });
+        }
+
+        // Function to handle approval of an appointment
+        function approveAppointment(appointmentId) {
+            const empID = {{userInfo.employee_id}};
+            $.ajax({
+                url: `/approve-appointment/${appointmentId}/${empID}`,
+                type: 'POST',
+                success: function() {
+                    alert('Appointment approved successfully!');
+                    fetchPendingAppointments(); // Refresh pending appointments after update
+                },
+                error: function() {
+                    alert('Failed to approve appointment.');
+                }
+            });
+        }
+
+        // Function to handle rejection of an appointment
+        function rejectAppointment(appointmentId) {
+            const empID = {{userInfo.employee_id}};
+            $.ajax({
+                url: `/reject-appointment/${appointmentId}/${empID}`,
+                type: 'POST',
+                success: function() {
+                    alert('Appointment rejected successfully!');
+                    fetchPendingAppointments(); // Refresh pending appointments after update
+                },
+                error: function() {
+                    alert('Failed to reject appointment.');
+                }
+            });
+        }
+
+        // Event listener for approving appointments
+        $(document).on('click', '.approve-btn', function() {
+            const appointmentId = $(this).data('id');
+            approveAppointment(appointmentId);
+        });
+
+        // Event listener for rejecting appointments
+        $(document).on('click', '.reject-btn', function() {
+            const appointmentId = $(this).data('id');
+            rejectAppointment(appointmentId);
+        });
+
+        // Fetch appointments when the page loads
+        $(document).ready(function() {
+            fetchPendingAppointments();
+
+            // Fetch appointments when a tab is shown
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                const target = $(e.target).data('bs-target'); // activated tab
+                if (target === '#pending') {
+                    fetchPendingAppointments();
+                } else if (target === '#approved') {
+                    fetchApprovedAppointments();
+                } else if (target === '#rejected') {
+                    fetchRejectedAppointments();
+                }
+            });
+        });
+    </script>
 </body>
-{{>scripts}}
-
-<script>
-    
-</script>
-
-
 
 </html>

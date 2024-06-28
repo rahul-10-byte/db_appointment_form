@@ -98,15 +98,18 @@ const employeeController = require("../controller/employeeController");
 
 // Joi validation schema
 const appointmentFormSchema = Joi.object({
+    appointmentType: Joi.string().required(),
     appointmentReason: Joi.string().required(),
     baseTown: Joi.string().required(),
     townPopulation: Joi.number().required(),
     townState: Joi.string().required(),
     townRegion: Joi.string().required(),
+    townPincode: Joi.number().required(),
     firstApprover: Joi.string().required(),
     secondApprover: Joi.string().required(),
     thirdApprover: Joi.string().required(),
-    sapSSCode: Joi.number().allow("").optional(),
+    sapCode: Joi.number().allow("").optional(),
+    exitPartyId: Joi.number().allow("").optional(),
     existingPartyName: Joi.string().allow("").optional(),
     existingPartyTown: Joi.string().allow("").optional(),
     existingPartyContact: Joi.string().allow("").optional(),
@@ -152,7 +155,8 @@ const appointmentFormSchema = Joi.object({
     proposedOutletCovered: Joi.string().required(),
     routesCount: Joi.number().required(),
     proposedSalesmanCount: Joi.number().required(),
-    proposedVehicleCount: Joi.number().required(),
+    proposedTwoWheelerCount: Joi.number().required(),
+    proposedFourWheelerCount: Joi.number().required(),
     expectedTurnover: Joi.number().required(),
     stockNorms: Joi.string().required(),
     invoiceFrequency: Joi.string().required(),
@@ -179,20 +183,35 @@ router.get("/home", function (req, res, next) {
     res.render("home", { title: "Home" });
 });
 
-router.get("/dbAppointmentForm", appointmentController.dbAppointmentForm);
+router.get("/dbAppointmentForm", ensureAuthenticated, appointmentController.dbAppointmentForm);
 
-router.get("/distributors", distributorController.getDistributorList);
+router.get("/distributors", ensureAuthenticated, distributorController.getDistributorList);
 
-router.get("/approvallist", appointmentController.getApprovalList);
+router.get("/approvallist", ensureAuthenticated, appointmentController.getApprovalList);
 
 // API endpoint to get distributor details by party_id
-router.get("/distributor/:party_id", distributorController.getDistributorById);
+router.get("/getDistributor/:sap_code", distributorController.getDistributorById);
 
 // route to get approval details
-router.post("/getApprovalList", appointmentController.getApprovalList);
+router.post("/getApprovalList", ensureAuthenticated, appointmentController.getApprovalList);
 
 //get Employee Details
 router.get("/getEmployeeDetails/:employeeId", employeeController.getEmployeeDetails);
+
+// Fetch pending appointments
+router.get('/:emp_id/getPendingAppointments',appointmentController.getPendingAppointments);
+
+// Fetch approved appointments
+router.get('/:emp_id/getApprovedAppointments',appointmentController.getApprovedAppointments);
+
+//Fetch rejected appointments
+router.get('/:emp_id/getRejectedAppointments',appointmentController.getRejectedAppointments);
+
+// Approve appointment
+router.post('/approve-appointment/:appt_id/:emp_id', appointmentController.approveAppointment);
+
+// Reject appointment
+router.post('/reject-appointment/:id', appointmentController.rejectAppointment);
 
 // Route to handle form submission
 router.post(

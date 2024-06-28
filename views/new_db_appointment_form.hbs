@@ -44,6 +44,7 @@
                                     <option value="">---Select Type---</option>
                                     <option value="SS">Super Stockist</option>
                                     <option value="DB">Distributor</option>
+                                    <option value="SubDB">Sub-Distributor</option>
                                 </select>
                             </div>
 
@@ -95,7 +96,7 @@
                         </div>
 
                         <div class="step step-2" id="step2">
-                            <h3>EXIT FORM FOR OLD PARTY</h3>
+                            <h3 id="exitFormTitle">EXIT FORM FOR OLD PARTY</h3>
                             <div class="form-group mb-3">
                                 <label for="sapCode" class="form-label">Existing Party's SAP SS/DB Code :</label>
                                 <input type="text" class="form-control" id="sapCode" name="sapCode">
@@ -178,6 +179,8 @@
                                     name="distributionDuration">
                             </div>
 
+                            <input type="hidden" name="exitPartyId" id="exitPartyId">
+
                             <div class="sticky-bottom sticky-buttons">
 
                                 <button type="button" class="btn btn-primary prev-step">Previous</button>
@@ -256,7 +259,8 @@
                                 <input type="file" class="form-control" id="firmCertificate" name="firmCertificate">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="partyTurnover" class="form-label">Current Turnover (in Lakhs) :</label>
+                                <label for="partyTurnover" class="form-label">Current Monthly Turnover (in Lakhs)
+                                    :</label>
                                 <input type="number" class="form-control" id="partyTurnover" name="partyTurnover">
                             </div>
 
@@ -518,7 +522,8 @@
                             <div class="form-group mb-3">
                                 <label for="firstApprover" class="form-label">First Level Approver :</label>
                                 <select id="firstApprover" name="firstApprover" class="form-control">
-                                    <option value="{{userInfo.employee_id}}" selected>{{userInfo.employee_name}} - {{userInfo.employee_designation}}
+                                    <option value="{{userInfo.employee_id}}" selected>{{userInfo.employee_name}} -
+                                        {{userInfo.employee_designation}}
                                     </option>
                                 </select>
                             </div>
@@ -571,6 +576,7 @@
 
                 if (currentStep === 1) {
                     const reason = $('#appointmentReason').val();
+
                     if (reason === 'Expansion') {
                         $('#step2').hide();
                         currentStep += 2;  // Skip Step 2 if reason is Expansion
@@ -596,6 +602,11 @@
 
                 if (currentStep === 3) {
                     const reason = $('#appointmentReason').val();
+
+                    if (reason === 'Bifurcation') {
+                        document.getElementById('exitFormTitle').innerText = 'EXISTING PARTY DETAILS';
+                    }
+
                     if (reason === 'Expansion') {
                         $('#step2').hide();
 
@@ -675,13 +686,24 @@
         populateApprovers();
     });
 
+    document.getElementById('appointmentReason').addEventListener('change', function () {
+        const reason = this.value;
+        console.log(reason);
+        var heading = document.getElementById('exitFormTitle');
+        if (reason === 'Birfurcation') {
+            heading.textContent = 'EXISTING PARTY DETAILS';
+        } else {
+            heading.textContent = 'EXIT FORM FOR OLD PARTY';
+        }
+    });
+
     //fetch party detail by sap code
     document.getElementById('sapCode').addEventListener("blur", function () {
         var sapCode = document.getElementById('sapCode').value;
         console.log(sapCode)
         if (sapCode.length) {
             $.ajax({
-                url: '/distributor/' + sapCode,
+                url: '/getDistributor/' + sapCode,
                 type: 'GET',
                 success: function (response) {
                     console.log('Party details:', response);
@@ -689,6 +711,7 @@
                     document.getElementById('existingPartyName').value = response.firm_name;
                     document.getElementById('existingPartyTown').value = response.address + ', ' + response.city + ', ' + response.state + ', ' + response.pincode;
                     document.getElementById('existingPartyContact').value = response.mobile;
+                    document.getElementById('exitPartyId').value = response.party_id;
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching party details:', error);
@@ -745,9 +768,9 @@
 
                     } else if (response[0].Status === 'Success') {
                         document.getElementById('baseTown').value = response[0].PostOffice[0].District;
-                        document.getElementById('baseTown').disabled = true;
+                        //document.getElementById('baseTown').disabled = true;
                         document.getElementById('townState').value = response[0].PostOffice[0].State;
-                        document.getElementById('townState').disabled = true;
+                        //document.getElementById('townState').disabled = true;
                     }
 
                 },
@@ -815,9 +838,9 @@
                 success: function (response) {
                     console.log('Bank details:', response);
                     document.getElementById('bankName').value = response.BANK;
-                    document.getElementById('bankName').disabled = true;
+                    //document.getElementById('bankName').disabled = true;
                     document.getElementById('branchName').value = response.BRANCH;
-                    document.getElementById('branchName').disabled = true;
+                    //document.getElementById('branchName').disabled = true;
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching bank details:', error);

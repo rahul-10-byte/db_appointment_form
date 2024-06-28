@@ -19,7 +19,6 @@ const dbAppointmentController = {
 
     submitAppointmentForm: async (req, res) => {
         const {
-            employeeId,
             appointmentType,
             appointmentReason,
             baseTown,
@@ -31,15 +30,14 @@ const dbAppointmentController = {
             secondApprover,
             thirdApprover,
             sapCode,
+            exitPartyId,
             existingPartyName,
-            existingPartyTown,
-            existingPartyContact,
             existingPartyTurnover,
             exitReason,
-            claimSettlementStatus,
             claimRegarding,
-            claimAmount,
+            claimSettlementStatus,
             settlementTimeline,
+            claimAmount,
             distributionDuration,
             firmName,
             GSTNo,
@@ -74,9 +72,10 @@ const dbAppointmentController = {
             approxTurnover2,
             approxInvestment2,
             proposedOutletCovered,
-            routesCount,
+            beatsCount,
             proposedSalesmanCount,
-            proposedVehicleCount,
+            proposedTwoWheelerCount,
+            proposedFourWheelerCount,
             expectedTurnover,
             stockNorms,
             invoiceFrequency,
@@ -124,7 +123,7 @@ const dbAppointmentController = {
         }
 
         const appointmentData = {
-            employee_id: employeeId,
+            employee_id: firstApprover,
             appointment_type: appointmentType,
             appointment_reason: appointmentReason,
             town: baseTown,
@@ -132,6 +131,7 @@ const dbAppointmentController = {
             state: townState,
             region: townRegion,
             pincode: pincode,
+            created_at: new Date().toISOString().slice(0, 19).replace("T", " "),
         };
 
         console.log("Appointment data:", appointmentData);
@@ -154,7 +154,7 @@ const dbAppointmentController = {
                 // Inserting party exit data
                 const partyExitData = {
                     appointment_id: appointmentId,
-                    party_id: existingPartyName,
+                    party_id: exitPartyId,
                     current_turnover: existingPartyTurnover,
                     exit_reason: exitReason,
                     claim_settlement_status: claimSettlementStatus,
@@ -178,19 +178,21 @@ const dbAppointmentController = {
 
                 const partyData = {
                     status: setStatus,
+                    appointment_id: appointmentId,
                     firm_name: firmName,
+                    gst_no: GSTNo,
                     address: firmAddress,
                     city: cityName,
                     state: stateName,
                     pincode: pinCode,
+                    type: appointmentType,
                     warehouse_size: warehouseSize,
-                    firm_type: partyType,
-                    gst_no: GSTNo,
-                    current_turnover: partyTurnover,
                     contact_person: contactPersonName,
                     mobile: mobileNo,
                     email: emailId,
                     area_covered: areaCovered,
+                    firm_type: partyType,
+                    current_turnover: partyTurnover,
                     created_at: new Date(),
                 };
 
@@ -305,11 +307,13 @@ const dbAppointmentController = {
                                             party_id: partyId,
                                             proposed_outlet_covered:
                                                 proposedOutletCovered,
-                                            routes_count: routesCount,
+                                            beats_count: beatsCount,
                                             proposed_salesman_count:
                                                 proposedSalesmanCount,
-                                            proposed_vehicle_count:
-                                                proposedVehicleCount,
+                                            proposed_2_wheeler_count:
+                                                proposedTwoWheelerCount,
+                                            proposed_4_wheeler_count:
+                                                proposedFourWheelerCount,
                                             expected_turnover: expectedTurnover,
                                             stock_norms: stockNorms,
                                             invoice_frequency: invoiceFrequency,
@@ -421,20 +425,56 @@ const dbAppointmentController = {
                                                                 );
 
                                                                 // Inserting approval data
-                                                                const approvalData =
+                                                                const level2Approver =
                                                                     {
                                                                         appointment_id:
                                                                             appointmentId,
                                                                         approver_id:
-                                                                            firstApprover,
+                                                                            secondApprover,
                                                                         approval_status:
                                                                             "Pending",
-                                                                        approval_level: 1,
+                                                                        approval_level: 2,
                                                                     };
 
+                                                                const level3Approver =
+                                                                    {
+                                                                        appointment_id:
+                                                                            appointmentId,
+                                                                        approver_id:
+                                                                            thirdApprover,
+                                                                        approval_status:
+                                                                            "Pending",
+                                                                        approval_level: 3,
+                                                                    };
+
+                                                                // Combine the data into an array of values
+                                                                const approvalData =
+                                                                    [
+                                                                        [
+                                                                            level2Approver.appointment_id,
+                                                                            level2Approver.approver_id,
+                                                                            level2Approver.approval_status,
+                                                                            level2Approver.approval_level,
+                                                                        ],
+                                                                        [
+                                                                            level3Approver.appointment_id,
+                                                                            level3Approver.approver_id,
+                                                                            level3Approver.approval_status,
+                                                                            level3Approver.approval_level,
+                                                                        ],
+                                                                    ];
+
+                                                                // Construct the query
+                                                                const query = `
+                                                                    INSERT INTO appointment_approvals (appointment_id, approver_id, approval_status, approval_level)
+                                                                    VALUES ?
+                                                                `;
+
                                                                 db.query(
-                                                                    "INSERT INTO appointment_approvals SET ?",
-                                                                    approvalData,
+                                                                    query,
+                                                                    [
+                                                                        approvalData,
+                                                                    ],
                                                                     (
                                                                         error,
                                                                         results
@@ -482,6 +522,263 @@ const dbAppointmentController = {
         );
     },
 
+    getPendingAppointments: (req, res) => {
+        const employeeId = req.params.emp_id;
+        const query = `
+            SELECT 
+                a.appointment_id, a.employee_id, a.appointment_type, a.appointment_reason, a.town, a.population,
+                a.state, a.region, a.pincode, a.status, b.firm_name, b.gst_no, b.address, b.city, b.state, b.pincode
+            FROM 
+                db_appointment_master a
+            JOIN 
+                party_master b ON a.appointment_id = b.appointment_id
+            JOIN
+                appointment_approvals c ON a.appointment_id = c.appointment_id
+            WHERE
+                c.approver_id = ? AND c.approval_status IN ('Pending')
+        `;
+
+        db.query(query, employeeId, (error, results) => {
+            if (error) {
+                console.error("Error fetching pending appointments:", error);
+                return res
+                    .status(500)
+                    .send("Error fetching pending appointments");
+            }
+            res.json(results);
+        });
+    },
+
+    getApprovedAppointments: (req, res) => {
+        const employeeId = req.params.emp_id;
+        const query = `
+            SELECT
+                a.appointment_id, a.employee_id, a.appointment_type, a.appointment_reason, a.town, a.population,
+                a.state, a.region, a.pincode, a.status, b.firm_name, b.gst_no, b.address, b.city, b.state, b.pincode
+            FROM
+                db_appointment_master a
+            JOIN
+                party_master b ON a.appointment_id = b.appointment_id
+            JOIN
+                appointment_approvals c ON a.appointment_id = c.appointment_id
+            WHERE
+                c.approver_id = ? AND c.approval_status IN ('Approved', 'Directly Approved')
+        `;
+        db.query(query, employeeId, (error, results) => {
+            if (error) {
+                console.error("Error fetching approved appointments:", error);
+                return res
+                    .status(500)
+                    .send("Error fetching approved appointments");
+            }
+
+            res.json(results);
+        });
+    },
+
+    getRejectedAppointments: (req, res) => {
+        const employeeId = req.params.emp_id;
+        const query = `
+            SELECT
+                a.appointment_id, a.employee_id, a.appointment_type, a.appointment_reason, a.town, a.population,
+                a.state, a.region, a.pincode, a.status, b.firm_name, b.gst_no, b.address, b.city, b.state, b.pincode
+            FROM
+                db_appointment_master a
+            JOIN
+                party_master b ON a.appointment_id = b.appointment_id
+            JOIN
+                appointment_approvals c ON a.appointment_id = c.appointment_id
+            WHERE
+                c.approver_id = ? AND c.approval_status = 'Rejected'
+        `;
+        db.query(query, employeeId, (error, results) => {
+            if (error) {
+                console.error("Error fetching rejected appointments:", error);
+                return res
+                    .status(500)
+                    .send("Error fetching rejected appointments");
+            }
+
+            res.json(results);
+        });
+    },
+
+    approveAppointment: (req, res) => {
+        const appointmentId = req.params.appt_id;
+        const employeeId = req.params.emp_id;
+        console.log(appointmentId, employeeId);
+
+        const approveQuery = `
+            UPDATE appointment_approvals
+            SET approval_status = 'Approved', updated_at = NOW()
+            WHERE appointment_id = ? AND approver_id = ?;
+        `;
+
+        db.query(
+            approveQuery,
+            [appointmentId, employeeId],
+            (error, results) => {
+                if (error) {
+                    console.error("Error approving appointment:", error);
+                    return res.status(500).send("Error approving appointment");
+                }
+
+                let updateStatusQuery = "";
+                const updateStatusParams = [appointmentId];
+
+                if (employeeId == 4) {
+                    console.log("Approver is the final level");
+
+                    updateStatusQuery = `
+                    UPDATE db_appointment_master
+                    SET status = 'Approved', updated_at = NOW()
+                    WHERE appointment_id = ?;
+                `;
+
+                    db.query(
+                        updateStatusQuery,
+                        updateStatusParams,
+                        (error, results) => {
+                            if (error) {
+                                console.error(
+                                    "Error updating approval status:",
+                                    error
+                                );
+                                return res
+                                    .status(500)
+                                    .send("Error updating approval status");
+                            }
+
+                            const updateLevel2Query = `
+                        UPDATE appointment_approvals
+                        SET approval_status = 'Directly Approved', updated_at = NOW()
+                        WHERE appointment_id = ? AND approval_status = 'Pending' AND approval_level = 2;
+                    `;
+
+                            db.query(
+                                updateLevel2Query,
+                                updateStatusParams,
+                                (error, results) => {
+                                    if (error) {
+                                        console.error(
+                                            "Error updating approval status for level 2:",
+                                            error
+                                        );
+                                        return res
+                                            .status(500)
+                                            .send(
+                                                "Error updating approval status for level 2"
+                                            );
+                                    }
+                                    res.status(200).send(
+                                        "Approved successfully"
+                                    );
+                                }
+                            );
+                        }
+                    );
+                } else {
+                    console.log("Approver is not the final level");
+
+                    updateStatusQuery = `
+                    UPDATE db_appointment_master
+                    SET status = CASE
+                        WHEN status = 'Pending at Level 2' THEN 'Pending at Level 3'
+                        WHEN status = 'Pending at Level 3' THEN 'Approved'
+                    END, updated_at = NOW()
+                    WHERE appointment_id = ?;
+                `;
+
+                    db.query(
+                        updateStatusQuery,
+                        updateStatusParams,
+                        (error, results) => {
+                            if (error) {
+                                console.error(
+                                    "Error updating approval status:",
+                                    error
+                                );
+                                return res
+                                    .status(500)
+                                    .send("Error updating approval status");
+                            }
+                            res.status(200).send("Approved successfully");
+                        }
+                    );
+                }
+            }
+        );
+    },
+
+    rejectAppointment: (req, res) => {
+        const appointmentId = req.params.id;
+        const query = `
+            UPDATE db_appointment_master
+            SET status = 'Rejected', updated_at = NOW()
+            WHERE appointment_id = ?;
+        `;
+
+        db.query(query, [appointmentId], (error, results) => {
+            if (error) {
+                console.error("Error rejecting appointment:", error);
+                return res.status(500).send("Error rejecting appointment");
+            }
+            res.status(200).send("Rejected successfully");
+        });
+    },
+
+    // updateApprovalStatus: async (req, res) => {
+    //     const { appointmentId, approverId, approvalStatus, approvalLevel } =
+    //         req.body;
+    //     let nextStatus = "";
+
+    //     try {
+    //         // Update the current approval status
+    //         await db.query(
+    //             "UPDATE appointment_approvals SET approval_status = ? WHERE appointment_id = ? AND approver_id = ? AND approval_level = ?",
+    //             [approvalStatus, appointmentId, approverId, approvalLevel]
+    //         );
+
+    //         // Determine the next status based on the current approval level and status
+    //         if (approvalStatus === "Approved") {
+    //             if (approvalLevel === 1) {
+    //                 nextStatus = "Pending at Level 2";
+    //             } else if (approvalLevel === 2) {
+    //                 nextStatus = "Pending at Level 3";
+    //             } else if (approvalLevel === 3) {
+    //                 nextStatus = "Approved";
+    //             }
+    //         } else if (approvalStatus === "Rejected") {
+    //             nextStatus = "Rejected";
+    //         }
+
+    //         // Update the appointment master status
+    //         await db.query(
+    //             "UPDATE db_appointment_master SET status = ? WHERE id = ?",
+    //             [nextStatus, appointmentId]
+    //         );
+
+    //         // If approved and not the final level, insert the next level approval
+    //         if (approvalStatus === "Approved" && approvalLevel < 3) {
+    //             const nextLevel = approvalLevel + 1;
+    //             const nextApprover =
+    //                 nextLevel === 2
+    //                     ? req.body.secondApprover
+    //                     : req.body.thirdApprover;
+
+    //             await db.query(
+    //                 "INSERT INTO appointment_approvals (appointment_id, approver_id, approval_status, approval_level) VALUES (?, ?, 'Pending', ?)",
+    //                 [appointmentId, nextApprover, nextLevel]
+    //             );
+    //         }
+
+    //         res.status(200).json("Approval status updated successfully!");
+    //     } catch (error) {
+    //         console.error("Error updating approval status:", error);
+    //         res.status(500).send("Error updating approval status");
+    //     }
+    // },
+
     getApprovalList: async (req, res) => {
         db.query(
             `SELECT * FROM db_appointment_master where status = "pending"`,
@@ -514,7 +811,7 @@ function insertExitData(partyExitData, res) {
 
             db.query(
                 "UPDATE party_master SET status = ? WHERE party_id = ?",
-                [setStatus, existingPartyName],
+                [setStatus, partyExitData.party_id],
                 (error, results) => {
                     if (error) {
                         console.error("Error updating party status:", error);
@@ -522,7 +819,7 @@ function insertExitData(partyExitData, res) {
                     }
                     console.log(
                         "Updated party status as INACTIVE with ID:",
-                        existingPartyName
+                        partyExitData.party_id
                     );
                 }
             );

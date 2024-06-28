@@ -15,10 +15,12 @@ const warehouseListController = {
     },
 
     getDistributorById: (req, res) => {
-        const partyId = parseInt(req.params.party_id, 10);
-        const query = "SELECT * FROM party_master WHERE party_id = ?";
+        const sapCode = req.params.sap_code;
+        const query = "SELECT * FROM party_master WHERE sap_code = ?";
     
-        db.query(query, [partyId], (err, results) => {
+        console.log(query, sapCode);
+        db.query(query, [sapCode], (err, results) => {
+            console.log("Results:", results);
             if (err) {
                 console.error("Error executing query:", err);
                 res.status(500).json({ error: "Database query error" });
@@ -28,7 +30,7 @@ const warehouseListController = {
             if (results.length > 0) {
                 res.json(results[0]);
             } else {
-                res.status(404).json({ error: "Warehouse not found" });
+                res.status(404).json({ error: "Distributor not found" });
             }
         });
     },

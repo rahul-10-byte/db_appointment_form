@@ -13,7 +13,7 @@
             {{>navbar}}
             <!-- Page content-->
             <div class="container-fluid">
-                <div class="p-3 m-5" style="background-color: aliceblue; border-radius:15px">
+                <div class="p-3 m-3" style="background-color: aliceblue; border-radius:15px">
                     <div class="row">
                         <div class="col-md-12">
                             <h1>Warehouse List</h1>
@@ -42,7 +42,7 @@
                                         <td>{{state}}</td>
                                         <td>
                                             <button type="button" class="btn view-details-btn"
-                                                data-party-id="{{party_id}}" data-bs-toggle="modal"
+                                                data-party-id="{{sap_code}}" data-bs-toggle="modal"
                                                 data-bs-target="#warehouseDetailsModal">
                                                 <i class="fa-solid fa-eye"></i>
                                             </button>
@@ -70,7 +70,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                            {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +101,7 @@
             var partyId = $(this).data('party-id');
 
             $.ajax({
-                url: '/distributor/' + partyId,
+                url: '/getDistributor/' + partyId,
                 method: 'GET',
                 success: function (data) {
                     // Populate the modal with the data received
